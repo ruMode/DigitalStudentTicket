@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DigitalStudentTicket.Views.LoginPageView"
+             Visual="Material">
+    <ContentPage.Content>
+        
+            <StackLayout x:Name="mainSL" Orientation="Vertical" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Spacing="20" Visual="Material">
+
+                <Label x:Name="title" Text="Авторизация" TextColor="Black" TextTransform="Uppercase"
+                        HorizontalOptions="CenterAndExpand" 
+                        FontFamily="Open Sans"
+                        FontSize="Large" Visual="Material"/>
+
+
+                <Label Text="Логин" TextColor="Black"
+                        Visual="Material"
+                        FontFamily="Open Sans"
+                        FontSize="Title"/>
+
+                <Entry x:Name="loginEntry" Placeholder="Введите логин или адрес эл.почты" PlaceholderColor="Gray" TextColor="Black" ClearButtonVisibility="WhileEditing" Visual="Material"/>
+
+
+                <Label Text="Пароль" TextColor="Black"
+                        FontFamily="Open Sans"
+                        FontSize="Title" Visual="Material"/>
+
+
+                <Entry x:Name="passEntry" Placeholder="Введите пароль" PlaceholderColor="Gray" IsPassword="True" TextColor="Black" ClearButtonVisibility="WhileEditing" Visual="Material"/>
+
+                <Button x:Name="logInBtn" Text="Войти" Clicked="logInBtn_Clicked" BackgroundColor="#005a97" TextColor="GhostWhite" Visual="Material"/>
+                <Button x:Name="regBtn" Text="Еще нет учетной записи? Зарегистрироваться" BackgroundColor="Transparent" BorderWidth="0" Clicked="regBtn_Clicked" Visual="Material"/>
+
+            </StackLayout>
+            
+
+    </ContentPage.Content>
+</ContentPage>

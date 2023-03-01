@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DigitalStudentTicket.MainPage" Visual="Material" Title="Расписание">
+    <StackLayout Spacing="10"   >
+        <!--<Label Text="Расписание" TextTransform="Uppercase" FontSize="Large" TextColor="Black" HorizontalOptions="Center"  />-->
+        <Label x:Name="currentDateLabel" FontSize="Large" HorizontalOptions="Center"  />
+
+        <CollectionView x:Name="sheduleCV" ItemSizingStrategy="MeasureAllItems" Margin="10" SelectionMode="Single"   SelectionChanged="sheduleCV_SelectionChanged" >
+           
+            <CollectionView.ItemTemplate  >
+                <DataTemplate>
+                    <Grid Padding="10" Margin="10" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Grid.RowSpan="2" Width=".2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Frame Grid.RowSpan="2" Grid.ColumnSpan="2" CornerRadius="10"  />
+
+                        <Label Text="{Binding Id}" TextColor="Black" FontSize="Title" HorizontalOptions="Center" VerticalOptions="Center"  />
+                        <Label Grid.Column="1" Text="{Binding Subject}" TextColor="Black" FontSize="Title" HorizontalOptions="Start"  />
+                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding GroupName}" TextColor="Black" FontSize="Title" HorizontalOptions="Start"  />
+
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label x:Name="scanResultLabel" Text="Scan result" />
+
+
+    </StackLayout>
+</ContentPage>
