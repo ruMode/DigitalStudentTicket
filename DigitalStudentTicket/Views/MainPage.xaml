@@ -30,7 +30,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Label x:Name="scanResultLabel" Text="Scan result" />
 
 
     </StackLayout>

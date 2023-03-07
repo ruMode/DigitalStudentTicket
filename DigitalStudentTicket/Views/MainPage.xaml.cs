@@ -15,13 +15,7 @@ namespace DigitalStudentTicket
 {
     public partial class MainPage : ContentPage
     {
-        ZXingScannerPage scannerPage = new ZXingScannerPage()
-        {
-            IsAnalyzing = true,
-            IsScanning = true,
-            DefaultOverlayShowFlashButton = true,
-            DefaultOverlayTopText = "Наведите камеру на QR-код студента"
-        };
+        public static ScannerPageView scannerPage = new ScannerPageView();
         public MainPage()
         {
             InitializeComponent();
@@ -29,13 +23,10 @@ namespace DigitalStudentTicket
         protected override void OnAppearing()
         {
             currentDateLabel.Text = DateTime.Now.ToShortDateString();
-            scannerPage.OnScanResult += ScannerPage_OnScanResult;
-
-            
 
             #region CollectionView Add items
 
-            List<SheduleItems> shedule= new List<SheduleItems>();
+            List<SheduleItems> shedule = new List<SheduleItems>();
             shedule.AddRange(new SheduleItems[]
             {
                 new SheduleItems()
@@ -69,51 +60,13 @@ namespace DigitalStudentTicket
                     GroupName="ИС-407"
                 },
             });
-            sheduleCV.ItemsSource= shedule;
+            sheduleCV.ItemsSource = shedule;
             #endregion
         }
         private async void sheduleCV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             await Navigation.PushAsync(scannerPage);
-        }
-
-        private async void ScannerPage_OnScanResult(ZXing.Result result)
-        {
-            scannerPage.IsAnalyzing = false; scannerPage.IsScanning = false;
             
-            try
-            {
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    
-                    var dialogResult= await DisplayAlert("Результат сканирования", result.Text, "Сканировать ещё", "Назад", FlowDirection.LeftToRight);
-
-                    if (dialogResult ==true)
-                    {
-                        ShowDisplayAlert(result);
-                    
-                    }
-                    else
-                    {
-                        scanResultLabel.Text = result.Text;
-                        await Navigation.PopAsync();
-
-                    }
-                });
-            
-            }
-            catch (Exception e)
-            {
-
-                await DisplayAlert("Error", e.Message, "Ok");
-                await Navigation.PopAsync();
-            }
-          
-        }
-        public async void ShowDisplayAlert(ZXing.Result result)
-        {
-            await DisplayAlert("Результат сканирования", result.Text, "Сканировать ещё", "Назад", FlowDirection.LeftToRight);
-            scanResultLabel.Text = result.Text;
         }
     }
 }
