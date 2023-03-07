@@ -15,6 +15,7 @@ namespace DigitalStudentTicket.Views
     {
         ScanResultStudentsListView studentsList = new ScanResultStudentsListView();
         public bool _isFlashlightTurnOn { get; set; } = false;
+        Models.ScanResultStudents newItem = new Models.ScanResultStudents();
         public ScannerPageView()
         {
             InitializeComponent();
@@ -27,10 +28,23 @@ namespace DigitalStudentTicket.Views
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    studentsList.Items.Add(new Models.ScanResultStudents { Text = result.Text, Detail = "Студент" });
+                    newItem.Text = result.Text; newItem.Detail = "Cтудент";
+
+                    if (studentsList.Items.Contains(newItem))
+                    {
+                        await DisplayAlert("Ошибка!", "Такой студент уже отсканирован", "ОК");
+                        return;
+                    }
+                    else
+                    {
+                        studentsList.Items.Add(newItem);
+                        newItem = null;
+                        await Navigation.PushAsync(studentsList);
+                        Navigation.RemovePage(this);
+                    }
+
                 
-                    await Navigation.PushAsync(studentsList);
-                    Navigation.RemovePage(this);
+                    
                     
                 });
 

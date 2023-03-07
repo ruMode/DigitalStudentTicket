@@ -42,5 +42,12 @@ namespace DigitalStudentTicket.Views
 
             Navigation.RemovePage(this);
         }
+
+        private async void aproveResultsBtn_Clicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("Подтверждение", "Результаты успешно отправлены!", "Назад");
+            await Navigation.PopAsync();
+            Items.Clear();
+        }
     }
 }
