@@ -6,11 +6,7 @@
     <ContentPage.Content>
         
             <StackLayout x:Name="mainSL" Orientation="Vertical" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Spacing="20" Visual="Material">
-
-                <Label x:Name="title" Text="Авторизация" TextColor="Black" TextTransform="Uppercase"
-                        HorizontalOptions="CenterAndExpand" 
-                        FontFamily="Open Sans"
-                        FontSize="Large" Visual="Material"/>
+                <Image Source="logo3.png"/>
 
 
                 <Label Text="Логин" TextColor="Black"
@@ -29,7 +25,6 @@
                 <Entry x:Name="passEntry" Placeholder="Введите пароль" PlaceholderColor="Gray" IsPassword="True" TextColor="Black" ClearButtonVisibility="WhileEditing" Visual="Material"/>
 
                 <Button x:Name="logInBtn" Text="Войти" Clicked="logInBtn_Clicked" BackgroundColor="#005a97" TextColor="GhostWhite" Visual="Material"/>
-                <Button x:Name="regBtn" Text="Еще нет учетной записи? Зарегистрироваться" BackgroundColor="Transparent" BorderWidth="0" Clicked="regBtn_Clicked" Visual="Material"/>
 
             </StackLayout>
             

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="DigitalStudentTicket.AppShell"
+       xmlns:local="clr-namespace:DigitalStudentTicket" 
+       xmlns:views="clr-namespace:DigitalStudentTicket.Views"
+       Visual="Material" >
+
+    <ShellContent Title="Вход" Route="loginPage" ContentTemplate="{DataTemplate views:LoginPageView}"/>
+    <ShellContent Title="Расписание" Route="shedulePage" ContentTemplate="{DataTemplate local:MainPage}"/>
+    
+</Shell>
