@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DigitalStudentTicket.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,60 +16,47 @@ namespace DigitalStudentTicket.Views
     {
         ScanResultStudentsListView studentsList = new ScanResultStudentsListView();
         public bool _isFlashlightTurnOn { get; set; } = false;
-        Models.ScanResultStudents newItem = new Models.ScanResultStudents();
         public ScannerPageView()
         {
             InitializeComponent();
         }
-       
-        private async void ZXingScannerView_OnScanResult(ZXing.Result result)
+        protected override void OnDisappearing()
         {
+            Navigation.RemovePage(this);
+            base.OnDisappearing();
 
-            try
-            {
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    newItem.Text = result.Text; newItem.Detail = "Cтудент";
+        }
+        private void ZXingScannerView_OnScanResult(ZXing.Result result)
+        {
+            MainThread.BeginInvokeOnMainThread(async () =>
+             {
+                 Models.ScanResultStudents newItem = new Models.ScanResultStudents();
+                 newItem.Text = result.Text; newItem.Detail = "Cтудент";
 
-                    if (studentsList.Items.Contains(newItem))
-                    {
-                        await DisplayAlert("Ошибка!", "Такой студент уже отсканирован", "ОК");
-                        return;
-                    }
-                    else
-                    {
-                        studentsList.Items.Add(newItem);
-                        newItem = null;
-                        await Navigation.PushAsync(studentsList);
-                        Navigation.RemovePage(this);
-                    }
-
-                
-                    
-                    
-                });
-
-            }
-            catch (Exception e)
-            {
-
-                await DisplayAlert("Error", e.Message, "Ok");
-                await Navigation.PopAsync();
-            }
+                 if (studentsList.Items.Contains(newItem))//не работает
+                 {
+                     studentsList.Items.Remove(newItem);
+                     await DisplayAlert("", "jib,rf", "gg");
+                 }
+                 else
+                 {
+                     studentsList.Items.Add(new Models.ScanResultStudents() { Text = result.Text, Detail = "Студент" });
+                     await Navigation.PushAsync(studentsList);
+                 }
+             });
         }
 
         private async void ZXingDefaultOverlay_FlashButtonClicked(Button sender, EventArgs e)
         {
-            Device.BeginInvokeOnMainThread(async () =>
+            
+            if (!_isFlashlightTurnOn)
             {
-                if (!_isFlashlightTurnOn)
-                {
-                    await Flashlight.TurnOnAsync();
-                }
-                else await Flashlight.TurnOffAsync();
-                
-            });
+                await Flashlight.TurnOnAsync();
+            }
+            else await Flashlight.TurnOffAsync();
+           
           
         }
+
     }
 }

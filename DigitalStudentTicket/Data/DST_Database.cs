@@ -17,14 +17,8 @@ namespace DigitalStudentTicket.Data
         {
             db = new SQLiteAsyncConnection(connectionString);
 
-            try
-            {
-                db.CreateTablesAsync<Users, Roles, Students, Groups>().Wait();
-            }
-            catch (Exception e)
-            {
-                
-            }
+            db.CreateTablesAsync<Users, Roles, Students, Groups>().Wait();
+           
 
         }
     }

@@ -15,6 +15,10 @@ namespace DigitalStudentTicket.Views
         public LoginPageView()
         {
             InitializeComponent();
+            
+            //passEntry.IsEnabled = false;
+            //loginEntry.IsEnabled = false;
+            //logInBtn.IsEnabled = false;
         }
 
         private void logInBtn_Clicked(object sender, EventArgs e)
@@ -24,7 +28,7 @@ namespace DigitalStudentTicket.Views
 
 
             //проверка юзера в нашей базе
-           if(IsUserExistSQL(loginEntry.Text, passEntry.Text))
+            if (IsUserExistSQL(loginEntry.Text, passEntry.Text))
            { 
                 Login(); //пока воид, но потом туда надо будет передавать экземпляр класса юзера
 

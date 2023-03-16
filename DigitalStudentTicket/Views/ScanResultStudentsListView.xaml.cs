@@ -14,15 +14,23 @@ namespace DigitalStudentTicket.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ScanResultStudentsListView : ContentPage
     {
-       public List<ScanResultStudents> Items = new List<ScanResultStudents>() { new ScanResultStudents { Text="Test item", Detail="detail"} };
+       public ObservableCollection<ScanResultStudents> Items = new ObservableCollection<ScanResultStudents>();
 
         public ScanResultStudentsListView()
         {
             InitializeComponent();
 
-            
 
+        }
+        protected override void OnAppearing()
+        {
             MyListView.ItemsSource = Items;
+
+        }
+        protected override void OnDisappearing()
+        {
+            Navigation.RemovePage(this);
+            base.OnDisappearing();
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -39,8 +47,8 @@ namespace DigitalStudentTicket.Views
         private async void scanNextBtn_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(MainPage.scannerPage);
-
-            Navigation.RemovePage(this);
+            //await Navigation.PopAsync();
+            
         }
 
         private async void aproveResultsBtn_Clicked(object sender, EventArgs e)

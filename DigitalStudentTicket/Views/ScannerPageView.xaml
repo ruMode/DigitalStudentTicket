@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DigitalStudentTicket.Views.ScannerPageView"
              xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
-             Visual="Material">
+             Visual="Material" Title="Сканирование QR-кода">
     <ContentPage.Content >
         <Grid>
-            <zxing:ZXingScannerView x:Name="ZXingScannerView" IsScanning="True" OnScanResult="ZXingScannerView_OnScanResult" />
+            <zxing:ZXingScannerView x:Name="ZXingScannerView" IsScanning="True" OnScanResult="ZXingScannerView_OnScanResult" IsTorchOn="True" />
             <zxing:ZXingDefaultOverlay ShowFlashButton="True" FlashButtonClicked="ZXingDefaultOverlay_FlashButtonClicked"  TopText="Наведите камеру на QR-код студента" BottomText="Сканирование..."/>
         </Grid>
     </ContentPage.Content>
