@@ -15,44 +15,49 @@ namespace DigitalStudentTicket.Views
         public LoginPageView()
         {
             InitializeComponent();
-            
-            //passEntry.IsEnabled = false;
-            //loginEntry.IsEnabled = false;
-            //logInBtn.IsEnabled = false;
+
+        }
+        protected override void OnAppearing()
+        {
         }
 
-        private void logInBtn_Clicked(object sender, EventArgs e)
+        private async void logInBtn_Clicked(object sender, EventArgs e)
         {
             //блокировка вьюшки
             mainSL.IsEnabled = false;
 
 
             //проверка юзера в нашей базе
-            if (IsUserExistSQL(loginEntry.Text, passEntry.Text))
-           { 
-                Login(); //пока воид, но потом туда надо будет передавать экземпляр класса юзера
-
-           }
+            if (string.IsNullOrEmpty(loginEntry.Text) & string.IsNullOrEmpty(passEntry.Text)) await DisplayAlert("Ошибка авторизации!", "Данные не введены. Попробуйте снова", "Ок");
             else
             {
-                //проверка в 1с
-                if (IsUserExist1C(loginEntry.Text, passEntry.Text))
-                {
-                    //копирование данных в нашу
-                    CopyUserFrom1C();
 
-                    //логин
+
+                if (App.Database.VerifyUser(loginEntry.Text.Trim(), passEntry.Text.Trim()))
+                {
                     Login(); //пока воид, но потом туда надо будет передавать экземпляр класса юзера
+
                 }
-                else DisplayAlert("Ошибка авторизации", "Неправильный логин или пароль!", "Ок"); mainSL.IsEnabled = true;
-            }     
-                    
+                else
+                {
+                    //проверка в 1с
+                    if (IsUserExist1C(loginEntry.Text.Trim(), passEntry.Text.Trim()))
+                    {
+                        //копирование данных в нашу
+                        CopyUserFrom1C();
+
+                        //логин
+                        Login(); //пока воид, но потом туда надо будет передавать экземпляр класса юзера
+                    }
+                    else DisplayAlert("Ошибка авторизации", "Неправильный логин или пароль!", "Ок"); mainSL.IsEnabled = true;
+                }
+            }         
         }
 
         private bool IsUserExistSQL(string login, string pass)
         {
             //проверяем
-
+            
             return true; //пока так, но потом надо будет возвращать экземпляр класса юзера
         } 
         private bool IsUserExist1C(string login, string pass)

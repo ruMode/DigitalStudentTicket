@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DigitalStudentTicket.Entities
 {
-    internal class Teachers
+    public class Teachers
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
