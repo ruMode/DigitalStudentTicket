@@ -30,7 +30,9 @@ namespace DigitalStudentTicket.Data
             else return false;
         }
 
-        public Task<int> AddUser (Users user)
+
+        #region Создание (Create)
+        public Task<int> AddUser (Users user) //создание юзера
         {
             if (_database.Table<Users>().Where(i => i.Id == user.Id).FirstOrDefaultAsync() == null)
                 return _database.InsertAsync(user);
@@ -38,9 +40,52 @@ namespace DigitalStudentTicket.Data
             else return null;
             
         }
-        public Task<List<Users>> GetAllUsers () 
+
+        public Task<int> AddUserRole (Roles role) //создание роли
+        {
+            if (_database.Table<Roles>().Where(i => i.Id == role.Id).FirstOrDefaultAsync() == null)
+                return _database.InsertAsync(role);
+
+            else return null;
+            
+        }
+        public Task<int> AddStudent(Students student) //создание студента
+        {
+            if (_database.Table<Students>().Where(i => i.ID == student.ID).FirstOrDefaultAsync() == null)
+                return _database.InsertAsync(student);
+
+            else return null;
+
+        }
+
+
+
+
+
+        #endregion
+
+        #region Чтение (Read)
+        public Task<List<Users>> GetAllUsers () //получение списка всех юзеров
         {
             return _database.Table<Users>().ToListAsync();
         }
+        public Task<Users> GetUser (Users user) //получение юзера по айди
+        {
+            return _database.Table<Users>().Where(i=> i.Id == user.Id).FirstOrDefaultAsync();
+        }
+
+
+        #endregion
+
+        #region Обновление (Update)
+
+
+
+        #endregion
+
+
+        #region Удаление (Delete)
+
+        #endregion
     }
 }

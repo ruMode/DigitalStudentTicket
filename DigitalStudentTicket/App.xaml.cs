@@ -25,6 +25,7 @@ namespace DigitalStudentTicket
 
             MainPage = new AppShell();
             Database.AddUser(new Entities.Users { Login = "admin", Password = "1" });
+            
 
             //MainPage = new NavigationPage(new MainPage());
         }

@@ -27,12 +27,16 @@ namespace DigitalStudentTicket.Views
             mainSL.IsEnabled = false;
 
 
-            //проверка юзера в нашей базе
-            if (string.IsNullOrEmpty(loginEntry.Text) & string.IsNullOrEmpty(passEntry.Text)) await DisplayAlert("Ошибка авторизации!", "Данные не введены. Попробуйте снова", "Ок");
+            //проверяем поля ввода на пустоту
+            if (string.IsNullOrEmpty(loginEntry.Text) & string.IsNullOrEmpty(passEntry.Text))
+            { 
+                await DisplayAlert("Ошибка авторизации!", "Данные не введены. Попробуйте снова", "Ок"); 
+                mainSL.IsEnabled = true; 
+            }
             else
             {
 
-
+                //проверка юзера в нашей базе
                 if (App.Database.VerifyUser(loginEntry.Text.Trim(), passEntry.Text.Trim()))
                 {
                     Login(); //пока воид, но потом туда надо будет передавать экземпляр класса юзера
@@ -49,7 +53,7 @@ namespace DigitalStudentTicket.Views
                         //логин
                         Login(); //пока воид, но потом туда надо будет передавать экземпляр класса юзера
                     }
-                    else DisplayAlert("Ошибка авторизации", "Неправильный логин или пароль!", "Ок"); mainSL.IsEnabled = true;
+                    else await DisplayAlert("Ошибка авторизации", "Неправильный логин или пароль!", "Ок"); mainSL.IsEnabled = true;
                 }
             }         
         }

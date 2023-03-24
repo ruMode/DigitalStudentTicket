@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DigitalStudentTicket.Models
 {
-    internal class SheduleItems
+    public class SheduleItems
     {
         public int Id { get; set; }
         public string Subject { get; set; }
