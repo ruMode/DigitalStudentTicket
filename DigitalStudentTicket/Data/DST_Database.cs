@@ -26,15 +26,16 @@ namespace DigitalStudentTicket.Data
 
         public bool VerifyUser(string login, string password)
         {
-            if (_database.Table<Users>().Where(i => i.Login == login & i.Password == password).FirstOrDefaultAsync() != null) return true;
+            if (_database.Table<Users>().Where(i => i.Login == login && i.Password == password).FirstOrDefaultAsync().Result != null) return true;
             else return false;
         }
+
 
 
         #region Создание (Create)
         public Task<int> AddUser (Users user) //создание юзера
         {
-            if (_database.Table<Users>().Where(i => i.Id == user.Id).FirstOrDefaultAsync() == null)
+            if (_database.Table<Users>().Where(i => i.Id == user.Id).FirstOrDefaultAsync().Result == null)
                 return _database.InsertAsync(user);
 
             else return null;
@@ -43,7 +44,7 @@ namespace DigitalStudentTicket.Data
 
         public Task<int> AddUserRole (Roles role) //создание роли
         {
-            if (_database.Table<Roles>().Where(i => i.Id == role.Id).FirstOrDefaultAsync() == null)
+            if (_database.Table<Roles>().Where(i => i.Id == role.Id).FirstOrDefaultAsync().Result == null)
                 return _database.InsertAsync(role);
 
             else return null;
@@ -51,7 +52,7 @@ namespace DigitalStudentTicket.Data
         }
         public Task<int> AddStudent(Students student) //создание студента
         {
-            if (_database.Table<Students>().Where(i => i.ID == student.ID).FirstOrDefaultAsync() == null)
+            if (_database.Table<Students>().Where(i => i.ID == student.ID).FirstOrDefaultAsync().Result == null)
                 return _database.InsertAsync(student);
 
             else return null;
@@ -65,13 +66,13 @@ namespace DigitalStudentTicket.Data
         #endregion
 
         #region Чтение (Read)
-        public Task<List<Users>> GetAllUsers () //получение списка всех юзеров
+        public List<Users> GetAllUsers () //получение списка всех юзеров
         {
-            return _database.Table<Users>().ToListAsync();
+            return _database.Table<Users>().ToListAsync().Result;
         }
-        public Task<Users> GetUser (Users user) //получение юзера по айди
+        public Users GetUser (Users user) //получение юзера по айди
         {
-            return _database.Table<Users>().Where(i=> i.Id == user.Id).FirstOrDefaultAsync();
+            return _database.Table<Users>().Where(i=> i.Id == user.Id).FirstOrDefaultAsync().Result;
         }
 
 

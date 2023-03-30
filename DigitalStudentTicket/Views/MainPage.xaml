@@ -2,8 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DigitalStudentTicket.MainPage" Visual="Material" Title="Расписание">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Выход" Clicked="logoutBtn_Clicked"/>
+    </ContentPage.ToolbarItems>
     <StackLayout Spacing="10"   >
-        <!--<Label Text="Расписание" TextTransform="Uppercase" FontSize="Large" TextColor="Black" HorizontalOptions="Center"  />-->
+        <Label x:Name="welcomeLabel" Text="" TextTransform="Uppercase" FontSize="Large" TextColor="Black" HorizontalOptions="Center"  />
         <Label x:Name="currentDateLabel" FontSize="Large" HorizontalOptions="Center"  />
 
         <CollectionView x:Name="sheduleCV" ItemSizingStrategy="MeasureAllItems" Margin="10" SelectionMode="Single"   SelectionChanged="sheduleCV_SelectionChanged" >

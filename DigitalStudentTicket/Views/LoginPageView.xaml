@@ -5,6 +5,7 @@
              Visual="Material" Title="Авторизация" >
     <ContentPage.Content>
         
+         <ScrollView >
             <StackLayout x:Name="mainSL" Orientation="Vertical" HorizontalOptions="CenterAndExpand"  Spacing="20" Margin="20" >
                 <Image Source="logo3.png" Margin="0, 30" />
 
@@ -27,6 +28,8 @@
                 <Button x:Name="logInBtn" Text="Войти" Clicked="logInBtn_Clicked" BackgroundColor="#005a97" TextColor="GhostWhite" Margin="0, 20" />
 
             </StackLayout>
+
+        </ScrollView>
             
 
     </ContentPage.Content>

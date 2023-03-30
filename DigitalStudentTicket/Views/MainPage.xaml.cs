@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using ZXing.Net.Mobile;
 using ZXing.Net.Mobile.Forms;
@@ -22,7 +23,7 @@ namespace DigitalStudentTicket
         }
         protected override void OnAppearing()
         {
-            currentDateLabel.Text = DateTime.Now.ToShortDateString();
+            currentDateLabel.Text = "Сегодня: "+ DateTime.Now.ToShortDateString() +"г. (" + DateTime.Now.Day +")";
 
             #region CollectionView Add items
 
@@ -67,6 +68,12 @@ namespace DigitalStudentTicket
         {
             await Navigation.PushAsync(scannerPage);
             
+        }
+
+        private void logoutBtn_Clicked(object sender, EventArgs e)
+        {
+            Preferences.Clear();
+            Shell.Current.GoToAsync("///loginPage");
         }
     }
 }

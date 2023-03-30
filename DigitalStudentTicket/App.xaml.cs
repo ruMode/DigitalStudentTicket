@@ -1,6 +1,7 @@
 ﻿using DigitalStudentTicket.Data;
 using System;
 using System.IO;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -25,7 +26,7 @@ namespace DigitalStudentTicket
 
             MainPage = new AppShell();
             Database.AddUser(new Entities.Users { Login = "admin", Password = "1" });
-            
+
 
             //MainPage = new NavigationPage(new MainPage());
         }
