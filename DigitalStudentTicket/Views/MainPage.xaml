@@ -4,9 +4,10 @@
              x:Class="DigitalStudentTicket.MainPage" Visual="Material" Title="Расписание">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Выход" Clicked="logoutBtn_Clicked"/>
+        <!--<ToolbarItem Text="Админ" Clicked="admin_Clicked"/>-->
     </ContentPage.ToolbarItems>
     <StackLayout Spacing="10"   >
-        <Label x:Name="welcomeLabel" Text="" TextTransform="Uppercase" FontSize="Large" TextColor="Black" HorizontalOptions="Center"  />
+        <!--<Label x:Name="welcomeLabel" Text="" TextTransform="Uppercase" FontSize="Large" TextColor="Black" HorizontalOptions="Center"  />-->
         <Label x:Name="currentDateLabel" FontSize="Large" HorizontalOptions="Center"  />
 
         <CollectionView x:Name="sheduleCV" ItemSizingStrategy="MeasureAllItems" Margin="10" SelectionMode="Single"   SelectionChanged="sheduleCV_SelectionChanged" >
@@ -25,9 +26,9 @@
 
                         <Frame Grid.RowSpan="2" Grid.ColumnSpan="2" CornerRadius="10"  />
 
-                        <Label Text="{Binding Id}" TextColor="Black" FontSize="Title" HorizontalOptions="Center" VerticalOptions="Center"  />
-                        <Label Grid.Column="1" Text="{Binding Subject}" TextColor="Black" FontSize="Title" HorizontalOptions="Start"  />
-                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding GroupName}" TextColor="Black" FontSize="Title" HorizontalOptions="Start"  />
+                        <Label Text="{Binding para}" TextColor="Black" FontSize="Title" HorizontalOptions="Center" VerticalOptions="Center"  />
+                        <Label Grid.Column="1" Text="{Binding name_predmet}" TextColor="Black" FontSize="Title" HorizontalOptions="Start"  />
+                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding group_name}" TextColor="Black" FontSize="Title" HorizontalOptions="Start"  />
 
                     </Grid>
                 </DataTemplate>

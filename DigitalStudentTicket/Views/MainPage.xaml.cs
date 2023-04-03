@@ -2,8 +2,10 @@
 using DigitalStudentTicket.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,46 +25,11 @@ namespace DigitalStudentTicket
         }
         protected override void OnAppearing()
         {
-            currentDateLabel.Text = "Сегодня: "+ DateTime.Now.ToShortDateString() +"г. (" + DateTime.Now.Day +")";
+            currentDateLabel.Text = "Сегодня: "+ DateTime.Now.ToShortDateString() +"г. (" + DateTime.Now.DayOfWeek.ToString() +")";
 
-            #region CollectionView Add items
-
-            List<SheduleItems> shedule = new List<SheduleItems>();
-            shedule.AddRange(new SheduleItems[]
-            {
-                new SheduleItems()
-                {
-                    Id= 1,
-                    Subject="Пара 1",
-                    GroupName="ИС-407"
-                },
-                new SheduleItems()
-                {
-                    Id= 2,
-                    Subject="Пара 2",
-                    GroupName="ИС-407"
-                },
-                new SheduleItems()
-                {
-                    Id= 3,
-                    Subject="Пара 3",
-                    GroupName="ИС-407"
-                },
-                new SheduleItems()
-                {
-                    Id= 4,
-                    Subject="Пара 4",
-                    GroupName="ИС-407"
-                },
-                new SheduleItems()
-                {
-                    Id= 5,
-                    Subject="Пара 5",
-                    GroupName="ИС-407"
-                },
-            });
-            sheduleCV.ItemsSource = shedule;
-            #endregion
+            int techerCode = 000000050;
+            sheduleCV.ItemsSource = GetShedule(techerCode);
+           
         }
         private async void sheduleCV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -74,6 +41,34 @@ namespace DigitalStudentTicket
         {
             Preferences.Clear();
             Shell.Current.GoToAsync("///loginPage");
+        }
+
+        private void admin_Clicked(object sender, EventArgs e)
+        {
+            //App.Database.DeleteAllUsers();
+            Shell.Current.GoToAsync("///dbTables");
+        }
+
+        private List<SheduleItems.SheduleItem> GetShedule(int teacherCode)
+        {
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"https://kamtk.ru/BaseKPK/hs/El_zurnal11?code_teacher={teacherCode}&date_lessons=2");
+            request.Headers.Add("Authorization", "Basic 0KHQsNC50YI6"); //заголовки базовой авторизации
+            var response = client.SendAsync(request).Result;
+            var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result; //получаем строку с ответом сервера
+            
+            try
+            {
+                var shedule = Newtonsoft.Json.JsonConvert.DeserializeObject<SheduleItems>(respContent);
+                return shedule.Data.ToList();
+
+            }
+            catch (Exception e)
+            {
+                DisplayAlert("", e.Message, "ok");
+                throw;
+            }
+
         }
     }
 }

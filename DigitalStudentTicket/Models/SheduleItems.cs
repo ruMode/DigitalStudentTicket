@@ -6,8 +6,20 @@ namespace DigitalStudentTicket.Models
 {
     public class SheduleItems
     {
-        public int Id { get; set; }
-        public string Subject { get; set; }
-        public string GroupName { get; set; }
+        public SheduleItem[] Data { get; set; }
+        
+        public class SheduleItem
+        {
+            public string para { get; set; }
+            public string name_predmet { get; set; }
+            public string code_predmet { get; set; }
+            public string group_name { get; set; }
+            public string group_code { get; set; }
+            public string teacher_code { get; set; }
+            public int number_Lesson { get; set; }
+            public string date { get; set; }
+        }
+
+
     }
 }

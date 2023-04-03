@@ -8,5 +8,6 @@
 
     <ShellContent Title="Вход" Route="loginPage" ContentTemplate="{DataTemplate views:LoginPageView}"/>
     <ShellContent Title="Расписание" Route="shedulePage" ContentTemplate="{DataTemplate local:MainPage}"/>
+    <ShellContent Title="База" Route="dbTables" ContentTemplate="{DataTemplate views:DbTablesView}"/>
     
 </Shell>

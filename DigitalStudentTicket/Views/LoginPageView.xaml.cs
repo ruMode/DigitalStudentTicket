@@ -47,12 +47,11 @@ namespace DigitalStudentTicket.Views
             }
             else
             {
-
                 //проверка юзера в нашей базе
                 if (App.Database.VerifyUser(loginEntry.Text, passEntry.Text))
                 {
-                    Login(); //пока воид, но потом туда надо будет передавать экземпляр класса юзера
-
+                    Login(); //пока воид, но потом туда надо будет передавать роль юзера
+                    
                 }
                 else
                 {
@@ -77,40 +76,29 @@ namespace DigitalStudentTicket.Views
             
             return false; //пока так, но потом надо будет возвращать экземпляр класса юзера
         } 
-        private  bool IsUserExist1C(string login, string pass)
+        private bool IsUserExist1C(string login, string pass)
         {
             //проверяем
             //{
-            // хттп запрос к базе 1с и возврат полной сущности чтобы записать в свою базу
-            //}
-            //string uri = $"https://kamtk.ru/BaseKPK/hs/El_zurnal7?login={login}&password={pass}";
-            //HttpClient httpClient = new HttpClient()
-            //var d = httpClient.GetAsync(uri).Result;
-
-            //    if (d.Content.ReadAsStringAsync().Result != "[]")
-            //    {
-
-            //        App.Database.AddUser(new Entities.Users { Login = login, Password = pass });
-            //        CopyUserFrom1C(d.Content.ToString());
-            //        return true;
-            //    }
-            //    else return false;
-
-
-            var client = new HttpClient();
+                // хттп запрос к базе 1с 
+                       
+            var client = new HttpClient(); 
             var request = new HttpRequestMessage(HttpMethod.Get, $"https://kamtk.ru/BaseKPK/hs/El_zurnal7?login={login}&password={pass}");
-            request.Headers.Add("Authorization", "Basic 0KHQsNC50YI6");
-            var response = client.SendAsync(request).Result;
-            // response.EnsureSuccessStatusCode();
-            if (response.Content.ReadAsStringAsync().Result != "[]")
-            {
+            request.Headers.Add("Authorization", "Basic 0KHQsNC50YI6"); //заголовки базовой авторизации
 
-                App.Database.AddUser(new Entities.Users { Login = login, Password = pass });
-                CopyUserFrom1C(request.Content.ToString());
-                return true;
+            var response = client.SendAsync(request).Result;
+
+            var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result; //получаем строку с ответом сервера
+            if (respContent != "[]")
+            {
+                App.Database.AddUser(new Entities.Users { Login = login, Password = pass }); //записываем данные юзера в нашу базу 
+                CopyUserFrom1C(respContent); //копируем данные 
+                return true; //юзер существуюет, значит можно залогиниться
             }
-            else return false;
-            //пока так, но потом надо будет возвращать экземпляр класса юзера
+            else return false; //юзера нет, сообщение об ошибке
+            
+            //}
+           
         }
         private void Login() //надо принимать экземпляр класса юзера
         {

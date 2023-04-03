@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using DigitalStudentTicket.Entities;
@@ -15,17 +16,14 @@ namespace DigitalStudentTicket.Data
 
         public DST_Database(string dbPath)
         {
-            _database = new SQLiteAsyncConnection(dbPath);
+            _database = new SQLiteAsyncConnection(dbPath); //соединяемся с базой
 
-            _database.CreateTablesAsync<Users, Roles>().Wait();
-            _database.CreateTablesAsync<Students, Groups>().Wait();
-            _database.CreateTablesAsync<Subjects, Teachers>().Wait();
-           
-
+            _database.CreateTablesAsync<Users, Roles, Subjects>().Wait(); //создаем таблицы, если они не были созданы ранее
         }
 
         public bool VerifyUser(string login, string password)
         {
+            //спрашиваем у базы есть ли юзер с такими данными
             if (_database.Table<Users>().Where(i => i.Login == login && i.Password == password).FirstOrDefaultAsync().Result != null) return true;
             else return false;
         }
@@ -35,7 +33,7 @@ namespace DigitalStudentTicket.Data
         #region Создание (Create)
         public Task<int> AddUser (Users user) //создание юзера
         {
-            if (_database.Table<Users>().Where(i => i.Id == user.Id).FirstOrDefaultAsync().Result == null)
+            if (_database.Table<Users>().Where(i => i.Login == user.Login && i.Password == user.Password).FirstOrDefaultAsync().Result == null)
                 return _database.InsertAsync(user);
 
             else return null;
@@ -50,17 +48,6 @@ namespace DigitalStudentTicket.Data
             else return null;
             
         }
-        public Task<int> AddStudent(Students student) //создание студента
-        {
-            if (_database.Table<Students>().Where(i => i.ID == student.ID).FirstOrDefaultAsync().Result == null)
-                return _database.InsertAsync(student);
-
-            else return null;
-
-        }
-
-
-
 
 
         #endregion
@@ -86,7 +73,10 @@ namespace DigitalStudentTicket.Data
 
 
         #region Удаление (Delete)
-
+        public  async void DeleteAllUsers()
+        {
+            await _database.DeleteAllAsync<Users>();
+        }
         #endregion
     }
 }
