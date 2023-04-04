@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DigitalStudentTicket.Entities;
 using SQLite;
-
-
+using Xamarin.Essentials;
 
 namespace DigitalStudentTicket.Data
 {
@@ -18,7 +17,7 @@ namespace DigitalStudentTicket.Data
         {
             _database = new SQLiteAsyncConnection(dbPath); //соединяемся с базой
 
-            _database.CreateTablesAsync<Users, Roles, Subjects>().Wait(); //создаем таблицы, если они не были созданы ранее
+            _database.CreateTablesAsync<Users, Teachers, Students>().Wait(); //создаем таблицы, если они не были созданы ранее
         }
 
         public bool VerifyUser(string login, string password)
@@ -34,20 +33,22 @@ namespace DigitalStudentTicket.Data
         public Task<int> AddUser (Users user) //создание юзера
         {
             if (_database.Table<Users>().Where(i => i.Login == user.Login && i.Password == user.Password).FirstOrDefaultAsync().Result == null)
-                return _database.InsertAsync(user);
+                return  _database.InsertAsync(user); 
 
             else return null;
             
         }
-
-        public Task<int> AddUserRole (Roles role) //создание роли
+        public Task<int> AddTeacher (Teachers teacher) //создание юзера
         {
-            if (_database.Table<Roles>().Where(i => i.Id == role.Id).FirstOrDefaultAsync().Result == null)
-                return _database.InsertAsync(role);
+            if (_database.Table<Teachers>().Where(i => i.Code_teacher==teacher.Code_teacher).FirstOrDefaultAsync().Result == null)
+                return _database.InsertAsync(teacher);
 
             else return null;
             
         }
+
+
+      
 
 
         #endregion
@@ -56,6 +57,10 @@ namespace DigitalStudentTicket.Data
         public List<Users> GetAllUsers () //получение списка всех юзеров
         {
             return _database.Table<Users>().ToListAsync().Result;
+        }
+        public List<Teachers> GetAllTeachers() //получение списка всех преподов
+        {
+            return _database.Table<Teachers>().ToListAsync().Result;
         }
         public Users GetUser (Users user) //получение юзера по айди
         {
@@ -76,6 +81,8 @@ namespace DigitalStudentTicket.Data
         public  async void DeleteAllUsers()
         {
             await _database.DeleteAllAsync<Users>();
+            await _database.DeleteAllAsync<Teachers>();
+            Preferences.Clear();
         }
         #endregion
     }

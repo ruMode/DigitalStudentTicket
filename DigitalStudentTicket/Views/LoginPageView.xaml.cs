@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DigitalStudentTicket.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -22,28 +23,28 @@ namespace DigitalStudentTicket.Views
         }
         protected override void OnAppearing()
         {
-            if(Preferences.ContainsKey("user_login")&&Preferences.ContainsKey("user_password")) 
+            //автологин при перезапуске приложения
+            if(Preferences.ContainsKey("user_login")&&Preferences.ContainsKey("user_password")) //ищем в найстроках ключи логина и пароля
             {
-                loginEntry.Text= Preferences.Get("user_login", "").ToString();
-                passEntry.Text= Preferences.Get("user_password", "").ToString();
+                loginEntry.Text = Preferences.Get("user_login", "").ToString(); //вставляем логин
+                passEntry.Text= Preferences.Get("user_password", "").ToString(); //пароль
+                MainPage.TeacherCode = Preferences.Get("user_code", "").ToString(); //код препода
                 Login();
             }
 
-            mainSL.IsEnabled = true; logInBtn.BackgroundColor = Color.FromHex("#005a97");
+            mainSL.IsEnabled = true; logInBtn.BackgroundColor = Color.FromHex("#005a97"); //разблокируем вьюшку
         }
 
         private async void logInBtn_Clicked(object sender, EventArgs e)
         {
             //блокировка вьюшки
-            mainSL.IsEnabled = false;
-            logInBtn.BackgroundColor = Color.FromHex("#005a97");
+            mainSL.IsEnabled = false; logInBtn.BackgroundColor = Color.FromHex("#005a97");
 
             //проверяем поля ввода на пустоту
             if (string.IsNullOrEmpty(loginEntry.Text) || string.IsNullOrEmpty(passEntry.Text))
             { 
                 await DisplayAlert("Ошибка авторизации!", "Данные не введены. Попробуйте снова", "Ок"); 
-                mainSL.IsEnabled = true;
-                logInBtn.BackgroundColor = Color.FromHex("#005a97");
+                mainSL.IsEnabled = true; logInBtn.BackgroundColor = Color.FromHex("#005a97");
             }
             else
             {
@@ -51,16 +52,12 @@ namespace DigitalStudentTicket.Views
                 if (App.Database.VerifyUser(loginEntry.Text, passEntry.Text))
                 {
                     Login(); //пока воид, но потом туда надо будет передавать роль юзера
-                    
                 }
                 else
                 {
                     //проверка в 1с
                     if (IsUserExist1C(loginEntry.Text, passEntry.Text))
                     {
-                        //копирование данных в нашу
-                        //CopyUserFrom1C();
-
                         //логин
                         Login(); //пока воид, но потом туда надо будет передавать экземпляр класса юзера
                     }
@@ -70,19 +67,14 @@ namespace DigitalStudentTicket.Views
             }         
         }
 
-        private bool IsUserExistSQL(string login, string pass)
-        {
-            //проверяем
-            
-            return false; //пока так, но потом надо будет возвращать экземпляр класса юзера
-        } 
         private bool IsUserExist1C(string login, string pass)
         {
             //проверяем
             //{
                 // хттп запрос к базе 1с 
                        
-            var client = new HttpClient(); 
+            var client = new HttpClient();
+            client.Timeout = TimeSpan.FromMinutes(5);
             var request = new HttpRequestMessage(HttpMethod.Get, $"https://kamtk.ru/BaseKPK/hs/El_zurnal7?login={login}&password={pass}");
             request.Headers.Add("Authorization", "Basic 0KHQsNC50YI6"); //заголовки базовой авторизации
 
@@ -91,9 +83,17 @@ namespace DigitalStudentTicket.Views
             var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result; //получаем строку с ответом сервера
             if (respContent != "[]")
             {
-                App.Database.AddUser(new Entities.Users { Login = login, Password = pass }); //записываем данные юзера в нашу базу 
+               var jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Teachers>>(respContent);
+                
+                App.Database.AddUser(new Users
+                {
+                    Login = login,
+                    Password = pass,
+                    Role = jsonObject.First().Code_teacher,
+                }) ; 
+                //MainPage.TeacherCode = jsonObject.First().Code_teacher;
                 CopyUserFrom1C(respContent); //копируем данные 
-                return true; //юзер существуюет, значит можно залогиниться
+                return true; //юзер существует, значит можно залогиниться
             }
             else return false; //юзера нет, сообщение об ошибке
             
@@ -103,17 +103,20 @@ namespace DigitalStudentTicket.Views
         private void Login() //надо принимать экземпляр класса юзера
         {
             //здесь нужно в зависимости от роли юзера (препод, студент) перейти на соотвествующую вьюшку и передать туда данные юзера
-           
-                Preferences.Set("user_login", loginEntry.Text);
-                Preferences.Set("user_password", passEntry.Text);
 
-           
+            Preferences.Set("user_login", loginEntry.Text);
+            Preferences.Set("user_password", passEntry.Text);
+            Preferences.Set("user_code", MainPage.TeacherCode);
             Shell.Current.GoToAsync("///shedulePage"); //логин
 
         }
         private void CopyUserFrom1C(string data) 
         {
             //копируем сущность из 1с и записываем данные в свою базу
+            var userData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Teachers>>(data);
+            MainPage.TeacherCode = userData.First().Code_teacher;
+            App.Database.AddTeacher(userData.First());
+            
         }
 
     }

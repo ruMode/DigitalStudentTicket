@@ -7,5 +7,6 @@
   <!--Pages can be added as references or inline-->
     <TabbedPage.Children>
         <local:UsersListView Title="Users"/>
+        <local:TeachersListView Title="Teachers"/>
     </TabbedPage.Children>
 </TabbedPage>

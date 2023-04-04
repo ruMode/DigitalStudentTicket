@@ -4,27 +4,27 @@
              x:Class="DigitalStudentTicket.MainPage" Visual="Material" Title="Расписание">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Выход" Clicked="logoutBtn_Clicked"/>
-        <!--<ToolbarItem Text="Админ" Clicked="admin_Clicked"/>-->
+        <ToolbarItem Text="Админ" Clicked="admin_Clicked"/>
     </ContentPage.ToolbarItems>
-    <StackLayout Spacing="10"   >
+    <StackLayout Spacing="5"   >
         <!--<Label x:Name="welcomeLabel" Text="" TextTransform="Uppercase" FontSize="Large" TextColor="Black" HorizontalOptions="Center"  />-->
-        <Label x:Name="currentDateLabel" FontSize="Large" HorizontalOptions="Center"  />
+        <Label x:Name="currentDateLabel" FontSize="Large" HorizontalOptions="Center" />
 
-        <CollectionView x:Name="sheduleCV" ItemSizingStrategy="MeasureAllItems" Margin="10" SelectionMode="Single"   SelectionChanged="sheduleCV_SelectionChanged" >
+        <CollectionView x:Name="sheduleCV" ItemSizingStrategy="MeasureAllItems" Margin="5" SelectionMode="Single"   SelectionChanged="sheduleCV_SelectionChanged" >
            
             <CollectionView.ItemTemplate  >
                 <DataTemplate>
-                    <Grid Padding="10" Margin="10" >
+                    <Grid Padding="10" Margin="10" HeightRequest="100">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition Height=".33*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Grid.RowSpan="2" Width=".2*"/>
+                            <ColumnDefinition Grid.RowSpan="2" Width="0.2*"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <Frame Grid.RowSpan="2" Grid.ColumnSpan="2" CornerRadius="10"  />
+                        <Frame Grid.RowSpan="2" Grid.ColumnSpan="2" CornerRadius="10" BorderColor="Black" HasShadow="True" />
 
                         <Label Text="{Binding para}" TextColor="Black" FontSize="Title" HorizontalOptions="Center" VerticalOptions="Center"  />
                         <Label Grid.Column="1" Text="{Binding name_predmet}" TextColor="Black" FontSize="Title" HorizontalOptions="Start"  />
