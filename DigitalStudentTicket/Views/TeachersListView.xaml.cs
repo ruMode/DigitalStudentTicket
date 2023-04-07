@@ -26,7 +26,7 @@ namespace DigitalStudentTicket.Views
                 users.Add(item); 
             }
          
-            usersLV.ItemsSource = users;
+            teachersLV.ItemsSource = users;
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)

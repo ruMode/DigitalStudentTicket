@@ -83,15 +83,15 @@ namespace DigitalStudentTicket.Views
             var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result; //получаем строку с ответом сервера
             if (respContent != "[]")
             {
-               var jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Teachers>>(respContent);
+                var jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Teachers>>(respContent);
                 
                 App.Database.AddUser(new Users
                 {
                     Login = login,
                     Password = pass,
-                    Role = jsonObject.First().Code_teacher,
-                }) ; 
-                //MainPage.TeacherCode = jsonObject.First().Code_teacher;
+                    Role = jsonObject.First().Code_teacher
+                });
+                MainPage.TeacherCode = jsonObject.First().Code_teacher;
                 CopyUserFrom1C(respContent); //копируем данные 
                 return true; //юзер существует, значит можно залогиниться
             }

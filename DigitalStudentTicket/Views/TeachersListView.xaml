@@ -1,55 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DigitalStudentTicket.Views.TeachersListView">
+             x:Class="DigitalStudentTicket.Views.TeachersListView" Visual="Material">
 
-    <StackLayout>
-        <ScrollView>
-            <CollectionView x:Name="usersLV">
-                <!--Built in Cells-->
-                <!--<ListView.ItemTemplate>
+
+    <ScrollView>
+        <CollectionView x:Name="teachersLV">
+            <!--Built in Cells-->
+            <!--<ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding .}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>-->
 
-                <!--Custom View Cells-->
+            <!--Custom View Cells-->
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="Black" Visual="Material">
+                        <StackLayout Spacing="10">
 
+                            <Label Text="{Binding Code_teacher, StringFormat='Code: {0}'}" />
+                            <Label Text="{Binding Name_teacher, StringFormat='Name: {0}'}" />
 
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="25"/>
-                                    <ColumnDefinition Width=".7*"/>
-                                    <ColumnDefinition Width=".3*"/>
-                                    <ColumnDefinition Width="40"/>
-                                </Grid.ColumnDefinitions>
+                        </StackLayout>
 
-                                <Label Text="ID" Grid.Column="0" />
-                                <Label Text="Login" Grid.Column="1" />
-                                <Label Text="Password" Grid.Column="2" />
-                                <Label Text="Role" Grid.Column="3" />
+                    </Frame>
 
-                                <Entry />
-                                <Label Text="{Binding Code_teacher}" Grid.Column="1" Grid.Row="1"/>
-                                <Label Text="{Binding Name_teacher}" Grid.Column="2" Grid.Row="1"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
 
 
-            </CollectionView>
+        </CollectionView>
+    </ScrollView>
 
-        </ScrollView>
-        <Button Text="Clear All" Clicked="Button_Clicked"/>
 
-    </StackLayout>
+
 </ContentPage>

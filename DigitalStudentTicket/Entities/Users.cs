@@ -11,6 +11,8 @@ namespace DigitalStudentTicket.Entities
         public int Id { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
+        [Column("Role")]
+        [MaxLength(9)]
         public string Role { get; set; }
 
         //public class Teacher

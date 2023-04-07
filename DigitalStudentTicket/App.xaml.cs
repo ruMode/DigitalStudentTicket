@@ -17,6 +17,7 @@ namespace DigitalStudentTicket
                 if (database == null)
                     database = new DST_Database(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DST_database.db3"));
                 return database;
+
             }
             
         }
@@ -25,7 +26,7 @@ namespace DigitalStudentTicket
             InitializeComponent();
 
             MainPage = new AppShell();
-            Database.DeleteAllUsers();
+            //Database.DeleteAllUsers();
             //Database.AddUser(new Entities.Users { Login = "admin", Password = "1" });
 
 

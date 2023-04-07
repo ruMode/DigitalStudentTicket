@@ -1,58 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DigitalStudentTicket.Views.UsersListView">
+             x:Class="DigitalStudentTicket.Views.UsersListView" Visual="Material">
 
-    <StackLayout>
-        <ScrollView>
-            <CollectionView x:Name="usersLV"
-                        ItemsSource="{Binding Items}">
-                <!--Built in Cells-->
-                <!--<ListView.ItemTemplate>
+    <ScrollView>
+        <CollectionView x:Name="usersLV">
+            <!--Built in Cells-->
+            <!--<ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding .}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>-->
 
-                <!--Custom View Cells-->
+            <!--Custom View Cells-->
 
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="Black" >
+                        <StackLayout Spacing="5">
+                            <Label Text="{Binding Id, StringFormat= 'ID: {0}'}"  />
+                            <Label Text="{Binding Login,StringFormat='Login: {0}'}" />
+                            <Label Text="{Binding Password,StringFormat='Password: {0}'}"/>
+                            <Label Text="{Binding Role, StringFormat='Code: {0}' }" />
 
-
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="25"/>
-                                    <ColumnDefinition Width=".7*"/>
-                                    <ColumnDefinition Width=".3*"/>
-                                    <ColumnDefinition Width="40"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Label Text="ID" Grid.Column="0" />
-                                <Label Text="Login" Grid.Column="1" />
-                                <Label Text="Password" Grid.Column="2" />
-                                <Label Text="Role" Grid.Column="3" />
-
-                                <Entry />
-                                <Label Text="{Binding Id}"  Grid.Column="0" Grid.Row="1" />
-                                <Label Text="{Binding Login}" Grid.Column="1" Grid.Row="1"/>
-                                <Label Text="{Binding Password}" Grid.Column="2" Grid.Row="1"/>
-                                <Label Text="{Binding Role}" Grid.Column="3" Grid.Row="1"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
+                        </StackLayout>
+ 
+                    </Frame>
 
 
-            </CollectionView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
 
-        </ScrollView>
-        <Button Text="Clear All" Clicked="Button_Clicked"/>
 
-    </StackLayout>
+        </CollectionView>
+
+    </ScrollView>
 </ContentPage>

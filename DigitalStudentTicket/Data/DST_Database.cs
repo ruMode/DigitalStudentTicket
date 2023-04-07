@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using DigitalStudentTicket.Entities;
+using Java.IO;
+using Java.Nio.Channels;
 using SQLite;
 using Xamarin.Essentials;
 
@@ -30,10 +32,10 @@ namespace DigitalStudentTicket.Data
 
 
         #region Создание (Create)
-        public Task<int> AddUser (Users user) //создание юзера
+        public Task AddUser (Users user) //создание юзера
         {
             if (_database.Table<Users>().Where(i => i.Login == user.Login && i.Password == user.Password).FirstOrDefaultAsync().Result == null)
-                return  _database.InsertAsync(user); 
+                return  _database.InsertAsync(user);
 
             else return null;
             
@@ -65,6 +67,10 @@ namespace DigitalStudentTicket.Data
         public Users GetUser (Users user) //получение юзера по айди
         {
             return _database.Table<Users>().Where(i=> i.Id == user.Id).FirstOrDefaultAsync().Result;
+        }
+        public Teachers GetTeacher (string teacherCode) //получение юзера по айди
+        {
+            return _database.Table<Teachers>().Where(i=> i.Code_teacher == teacherCode).FirstOrDefaultAsync().Result;
         }
 
 

@@ -1,4 +1,5 @@
-﻿using DigitalStudentTicket.Models;
+﻿using DigitalStudentTicket.Entities;
+using DigitalStudentTicket.Models;
 using DigitalStudentTicket.Views;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,8 @@ namespace DigitalStudentTicket
     {
         public static ScannerPageView scannerPage = new ScannerPageView();
         public string currentDate { get; set; } = $"Сегодня: {DateTime.Now.ToShortDateString()}г. ({DateTime.Now.DayOfWeek})";
-        public static string TeacherCode { get; set; }
+        public static string TeacherCode { get; set; } 
+        ObservableCollection<SheduleItems> _shedule = new ObservableCollection<SheduleItems>();
         public MainPage()
         {
             InitializeComponent();
@@ -47,7 +49,7 @@ namespace DigitalStudentTicket
         }
 
 
-        private async Task<List<SheduleItems>> GetShedule(string teacherCode)
+        private async Task<ObservableCollection<SheduleItems>> GetShedule(string teacherCode)
         {
             var client = new HttpClient();
             client.Timeout = TimeSpan.FromMinutes(5);
@@ -59,9 +61,18 @@ namespace DigitalStudentTicket
             var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result;
             try
             {
-                //конвертируем полученный JSON в объекты класса SheduleItems.SheduleItem (непосредственно само расписание)
+                //конвертируем полученный JSON в объекты класса SheduleItems (непосредственно само расписание)
                 var shedule = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SheduleItems>>(respContent);
-                return shedule;
+                _shedule.Clear();
+                foreach (var item in shedule)
+                {
+                    
+                    _shedule.Add(item);
+                    
+                    
+                }
+
+                return _shedule;
 
             }
             catch (Exception e)
@@ -76,6 +87,10 @@ namespace DigitalStudentTicket
         }
 
 
+        private async void UpdateSheduleBnt_Clicked(object sender, EventArgs e)
+        {
+           await GetShedule(TeacherCode);
+        }
 
 
 
