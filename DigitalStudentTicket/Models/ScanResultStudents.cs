@@ -8,6 +8,6 @@ namespace DigitalStudentTicket.Models
     {
         public string Text { get; set; }
 
-        public DateTime ScanDate { get; set; }
+        public string Detail { get; set; }
     }
 }

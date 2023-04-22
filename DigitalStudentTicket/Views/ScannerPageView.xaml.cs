@@ -30,24 +30,33 @@ namespace DigitalStudentTicket.Views
         {
             MainThread.BeginInvokeOnMainThread(async () =>
              {
-                 
-                 Models.ScanResultStudents newItem = new Models.ScanResultStudents() { Text = result.Text, ScanDate = DateTime.Now.ToLocalTime()};
-                 
+                 Models.ScanResultStudents newItem = new Models.ScanResultStudents();
+                 newItem.Text = result.Text; newItem.Detail = "Cтудент";
 
-                 if (ScanResultStudentsListView.Items.FirstOrDefault(i=> i.Text==newItem.Text)!= null)//не работает //работает
+                 if (studentsList.Items.Contains(newItem))//не работает
                  {
-                     ScanResultStudentsListView.Items.Remove(newItem);
-                     await DisplayAlert("Ошибка!", "Такой студент уже был отсканирован!", "Ок");
+                     studentsList.Items.Remove(newItem);
+                     await DisplayAlert("", "jib,rf", "gg");
                  }
                  else
                  {
-                     ScanResultStudentsListView.Items.Add(newItem);
+                     studentsList.Items.Add(new Models.ScanResultStudents() { Text = result.Text, Detail = "Студент" });
                      await Navigation.PushAsync(studentsList);
                  }
              });
         }
 
- 
+        private async void ZXingDefaultOverlay_FlashButtonClicked(Button sender, EventArgs e)
+        {
+            
+            if (!_isFlashlightTurnOn)
+            {
+                await Flashlight.TurnOnAsync();
+            }
+            else await Flashlight.TurnOffAsync();
+           
+          
+        }
 
     }
 }

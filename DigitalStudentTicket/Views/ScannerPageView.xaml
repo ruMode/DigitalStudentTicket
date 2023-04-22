@@ -7,8 +7,7 @@
     <ContentPage.Content >
         <Grid>
             <zxing:ZXingScannerView x:Name="ZXingScannerView" IsScanning="True" OnScanResult="ZXingScannerView_OnScanResult" IsTorchOn="True" />
-            <zxing:ZXingDefaultOverlay TopText="Наведите камеру на QR-код студента" BottomText="Сканирование..."/>
-            
+            <zxing:ZXingDefaultOverlay ShowFlashButton="True" FlashButtonClicked="ZXingDefaultOverlay_FlashButtonClicked"  TopText="Наведите камеру на QR-код студента" BottomText="Сканирование..."/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

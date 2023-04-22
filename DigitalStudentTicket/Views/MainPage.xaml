@@ -14,11 +14,11 @@
            
             <CollectionView.ItemTemplate  >
                 <DataTemplate>
-                    <Grid Padding="10" Margin="10" >
+                    <Grid Padding="10" Margin="10" HeightRequest="200">
                         <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height=".33*"/>
                             <RowDefinition />
-                            <RowDefinition Height="50"/>
-                            <!--<RowDefinition Height="50"/>-->
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Grid.RowSpan="2" Width="0.2*"/>
@@ -28,14 +28,14 @@
                         <Frame Grid.RowSpan="2" Grid.ColumnSpan="2" CornerRadius="10" BorderColor="Black" HasShadow="True" />
 
                         <Label Text="{Binding para}" TextColor="Black" FontSize="Title" HorizontalOptions="Center" VerticalOptions="Center"  />
-                        <Label Grid.Column="1" Text="{Binding name_predmet}" TextColor="Black" FontSize="Title" HorizontalOptions="Start" />
+                        <Label Grid.Column="1" Text="{Binding name_predmet}" TextColor="Black" FontSize="Title" HorizontalOptions="Start"  />
                         <Label Grid.Column="1" Grid.Row="1" Text="{Binding group_name}" TextColor="Black" FontSize="Title" HorizontalOptions="Start"  />
-                        <!--<Button Text="Scan QR-Code" Grid.Row="2" Grid.ColumnSpan="2" HeightRequest="50"/>-->
+                        <Button Text="Scan QR-Code" Grid.Row="2" WidthRequest="300"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="Обновить расписание" Clicked="UpdateSheduleBnt_Clicked" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="5"/>
+        <Button Text="Обновить расписание" Clicked="UpdateSheduleBnt_Clicked" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" WidthRequest="200"/>
 
     </StackLayout>
 </ContentPage>
