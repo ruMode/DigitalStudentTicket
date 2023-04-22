@@ -83,6 +83,7 @@ namespace DigitalStudentTicket.Views
             var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result; //получаем строку с ответом сервера
             if (respContent != "[]")
             {
+                //по роли надо открыть вьюшку потом
                 string role ="" ;
                 if (respContent.Contains("bool: true"))
                 {
