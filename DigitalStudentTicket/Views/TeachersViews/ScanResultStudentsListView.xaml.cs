@@ -14,7 +14,7 @@ namespace DigitalStudentTicket.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ScanResultStudentsListView : ContentPage
     {
-       public ObservableCollection<ScanResultStudents> Items = new ObservableCollection<ScanResultStudents>();
+       public static ObservableCollection<ScanResultStudents> Items = new ObservableCollection<ScanResultStudents>();
 
         public ScanResultStudentsListView()
         {
@@ -53,6 +53,12 @@ namespace DigitalStudentTicket.Views
 
         private async void aproveResultsBtn_Clicked(object sender, EventArgs e)
         {
+
+            //тут нужно формировать JSON с данными студента и пары или че там в запросе
+
+
+
+
             await DisplayAlert("Подтверждение", "Результаты успешно отправлены!", "Назад");
             await Navigation.PopAsync();
             Items.Clear();

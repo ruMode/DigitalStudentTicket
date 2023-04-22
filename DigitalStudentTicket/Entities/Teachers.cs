@@ -13,6 +13,5 @@ namespace DigitalStudentTicket.Entities
         public string Name_teacher { get; set; }
         public string Group_info { get; set; }
 
-
     }
 }
