@@ -35,6 +35,7 @@ namespace DigitalStudentTicket
 
         protected override void OnStart()
         {
+            
         }
 
         protected override void OnSleep()

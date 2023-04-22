@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading.Tasks;
-using DigitalStudentTicket.Entities;
-using Java.IO;
-using Java.Nio.Channels;
+﻿using DigitalStudentTicket.Entities;
 using SQLite;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 
 namespace DigitalStudentTicket.Data
