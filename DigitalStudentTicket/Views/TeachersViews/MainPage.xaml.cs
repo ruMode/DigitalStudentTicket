@@ -102,10 +102,6 @@ namespace DigitalStudentTicket
                 await DisplayAlert(Title, e.Message, "ok");    
                 throw;
             }
-                  
-            
-
-
         }
 
 

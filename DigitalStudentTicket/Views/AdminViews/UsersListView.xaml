@@ -21,7 +21,8 @@
                             <Label Text="{Binding Id, StringFormat= 'ID: {0}'}"  />
                             <Label Text="{Binding Login,StringFormat='Login: {0}'}" />
                             <Label Text="{Binding Password,StringFormat='Password: {0}'}"/>
-                            <Label Text="{Binding Role, StringFormat='Code: {0}' }" />
+                            <Label Text="{Binding Code, StringFormat='Code: {0}' }" />
+                            <Label Text="{Binding Role, StringFormat='Role: {0}' }" />
 
                         </StackLayout>
  

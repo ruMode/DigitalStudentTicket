@@ -14,14 +14,18 @@ namespace DigitalStudentTicket.Data
         {
             _database = new SQLiteAsyncConnection(dbPath); //соединяемся с базой
 
+            //_database.DropTableAsync<Users>().Wait();
             _database.CreateTablesAsync<Users, Teachers, Students>().Wait(); //создаем таблицы, если они не были созданы ранее
+            
         }
 
-        public bool VerifyUser(string login, string password)
+        public Users VerifyUser(string login, string password)
         {
             //спрашиваем у базы есть ли юзер с такими данными
-            if (_database.Table<Users>().Where(i => i.Login == login && i.Password == password).FirstOrDefaultAsync().Result != null) return true;
-            else return false;
+            Users _user = new Users();
+            _user = _database.Table<Users>().Where(i => i.Login == login && i.Password == password).FirstOrDefaultAsync().Result;
+            if (_user != null) return _user;
+            else return default;
         }
 
 
@@ -79,10 +83,10 @@ namespace DigitalStudentTicket.Data
 
 
         #region Удаление (Delete)
-        public  async void DeleteAllUsers()
+        public void DeleteAllUsers()
         {
-            await _database.DeleteAllAsync<Users>();
-            await _database.DeleteAllAsync<Teachers>();
+             _database.DropTableAsync<Users>().Wait();
+             _database.DropTableAsync<Teachers>().Wait();
             Preferences.Clear();
         }
         #endregion
