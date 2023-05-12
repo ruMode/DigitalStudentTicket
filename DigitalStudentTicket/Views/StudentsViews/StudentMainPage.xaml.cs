@@ -10,22 +10,18 @@ using Xamarin.Forms.Xaml;
 namespace DigitalStudentTicket.Views.StudentsViews
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class StudentMainPage : ContentPage
+    public partial class StudentMainPage : TabbedPage
     {
         public StudentMainPage()
         {
-            InitializeComponent();
+            InitializeComponent();        
         }
+
+
         private void logoutBtn_Clicked(object sender, EventArgs e)
         {
             Preferences.Clear();
             Shell.Current.GoToAsync("///loginPage");
         }
-        private void admin_Clicked(object sender, EventArgs e)
-        {
-            Shell.Current.GoToAsync("///dbTables");
-        }
-
-
     }
 }

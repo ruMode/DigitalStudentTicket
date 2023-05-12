@@ -15,6 +15,7 @@ namespace DigitalStudentTicket.Views
     public partial class ScanResultStudentsListView : ContentPage
     {
        public static ObservableCollection<ScanResultStudents> Items = new ObservableCollection<ScanResultStudents>();
+        ObservableCollection<ScanResultStudents> _Items = new ObservableCollection<ScanResultStudents>();
 
         public ScanResultStudentsListView()
         {
@@ -24,7 +25,12 @@ namespace DigitalStudentTicket.Views
         }
         protected override void OnAppearing()
         {
-            MyListView.ItemsSource = Items;
+            foreach (var item in Items)
+            {
+                var indexStudent = MainPage._lessonData.Code_student_J.IndexOf(item.Text);
+                var studentName = MainPage._lessonData.studentSave.fi
+            }
+            MyListView.ItemsSource = _Items;
 
         }
         protected override void OnDisappearing()

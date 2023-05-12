@@ -47,6 +47,14 @@ namespace DigitalStudentTicket.Data
             else return null;
             
         }
+        public Task<int> AddStudent (Students student) //создание юзера
+        {
+            if (_database.Table<Students>().Where(i => i.Code_Student== student.Code_Student).FirstOrDefaultAsync().Result == null)
+                return _database.InsertAsync(student);
+
+            else return null;
+            
+        }
 
 
       
@@ -62,6 +70,10 @@ namespace DigitalStudentTicket.Data
         public List<Teachers> GetAllTeachers() //получение списка всех преподов
         {
             return _database.Table<Teachers>().ToListAsync().Result;
+        }
+        public List<Students> GetAllStudents() //получение списка всех преподов
+        {
+            return _database.Table<Students>().ToListAsync().Result;
         }
         public Users GetUser (Users user) //получение юзера по айди
         {

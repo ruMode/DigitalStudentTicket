@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DigitalStudentTicket.Views.StudentsViews.StudentProfileView" 
+             xmlns:model="clr-namespace:DigitalStudentTicket.Entities"
+             Visual="Material" Title="Студент"
+             >
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".6*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <StackLayout Spacing="20" Orientation="Horizontal" Margin="10">
+                <StackLayout WidthRequest="180">
+                    <Frame BorderColor="Black">
+                        <Image Aspect="AspectFill"
+                           Source="https://u.9111s.ru/uploads/202112/09/2de331b8f5b07f2f51d7f26027ed9a8b.jpg" HeightRequest="180"/>
+  
+                    </Frame>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Name:"
+                           FontAttributes="Bold" />
+                    <Label Text="{Binding Name_Student}" />
+                
+                    <Label Text="Group:"
+                           FontAttributes="Bold" />
+                    <Label Text="{Binding Name_group} " />
+                
+                </StackLayout>
+
+                <!--<CollectionView x:Name="LV">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Label Text="{Binding Name_Student}" />
+                                <Label Text="{Binding Code_Student}" />
+
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>-->
+            </StackLayout>
+
+            <StackLayout Grid.Row="1" Spacing="20" VerticalOptions="End" Margin="10">
+                <Button Text="QR-code" />
+                <Button Text="Расписание" />
+            </StackLayout>
+            
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

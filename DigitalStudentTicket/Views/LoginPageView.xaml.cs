@@ -17,21 +17,21 @@ namespace DigitalStudentTicket.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPageView : ContentPage
     {
-        //public string Role { get; set; }
-       // public static Users CurrentUser { get; set; }
         public LoginPageView()
         {
             InitializeComponent();
 
         }
+
         protected override void OnAppearing()
         {
+            mainSL.IsEnabled = false; logInBtn.BackgroundColor = Color.Gray; //блокируем вьюшку
             //автологин при перезапуске приложения
-            if(Preferences.ContainsKey("user_login")&&Preferences.ContainsKey("user_password")) //ищем в найстроках ключи логина и пароля
+            if (Preferences.ContainsKey("user_login")&&Preferences.ContainsKey("user_password")) //ищем в найстроках ключи логина и пароля
             {
                 loginEntry.Text = Preferences.Get("user_login", "").ToString(); //вставляем логин
                 passEntry.Text= Preferences.Get("user_password", "").ToString(); //пароль
-                Login(Preferences.Get("user_role", "")); //код препода
+                Login(App.Database.VerifyUser(loginEntry.Text, passEntry.Text)); //логинимся
                
             }
 
@@ -51,14 +51,10 @@ namespace DigitalStudentTicket.Views
             }
             else
             {
-                Users _user = App.Database.VerifyUser(loginEntry.Text, passEntry.Text);
-                //проверка юзера в нашей базе
+                Users _user = App.Database.VerifyUser(loginEntry.Text, passEntry.Text); //проверяем юзера в базе и копируем его данные
                 if (_user != null)
                 {
-                    //App.Database.GetUser(_user);
-                    //Role = _user.Role;
-                   // CurrentUser=_user;
-                    Login(_user.Role); //пока воид, но потом туда надо будет передавать роль юзера
+                    Login(_user); //передаваем  юзера 
                 }
                 else
                 {
@@ -67,9 +63,7 @@ namespace DigitalStudentTicket.Views
                     if ( user1c != null)
                     {
                         //логин
-                        //Role = user1c.Role;
-                        //CurrentUser = user1c;
-                        Login(user1c.Role); //пока воид, но потом туда надо будет передавать экземпляр класса юзера
+                        Login(user1c); //передаем юзера
                     }
                     else await DisplayAlert("Ошибка авторизации", "Неправильный логин или пароль!", "Ок"); 
                     mainSL.IsEnabled = true; logInBtn.BackgroundColor = Color.FromHex("#005a97");
@@ -91,67 +85,80 @@ namespace DigitalStudentTicket.Views
             var response = client.SendAsync(request).Result;
 
             var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result; //получаем строку с ответом сервера
-            
-                       
-                //CopyUserFrom1C(respContent); //копируем данные 
-            return respContent; //юзер существует, значит можно залогиниться
-            
-             //юзера нет, сообщение об ошибке
+             
+            return respContent; //возвращаем полученный ответ от сервера
             
             //}
            
         }
-        private void Login(string role) //надо принимать экземпляр класса юзера
-        {
-            //здесь нужно в зависимости от роли юзера (препод, студент) перейти на соотвествующую вьюшку и передать туда данные юзера
-            Users _user = App.Database.VerifyUser(loginEntry.Text, passEntry.Text);
-            //CurrentUser = _user;
-            Preferences.Set("user_login", _user.Login);
-            Preferences.Set("user_password", _user.Password);
-            Preferences.Set("user_role", _user.Role);
 
-            if (role == "Teacher")
+        private Users Login( Users _user) //надо принимать экземпляр класса юзера
+        {
+            Preferences.Set("user_login", _user.Login); //записываем в настройки приложения для автовхода логин юзера
+            Preferences.Set("user_password", _user.Password); //пароль
+            
+            //проверяем роль юзера
+            if (_user.Role == "Teacher") 
             {
-                MainPage.TeacherCode = _user.Code;
-                //Preferences.Set("user_code", MainPage.TeacherCode);
-                Shell.Current.GoToAsync("///shedulePage"); //логин
+                MainPage.TeacherCode = _user.Code; //записываем код препода, для вывода расписания
+                Shell.Current.GoToAsync("///shedulePage"); //переходим на страницу с расписанием для препода
             }
-            else if (role == "Student")
+            else if (_user.Role == "Student")
             {
-                Shell.Current.GoToAsync("///studentsMainPage");//логин 
+                Shell.Current.GoToAsync("///studentsMainPage"); //переходим на страницу для студента
             }
             else DisplayAlert("Error", "Unexpected error occurred!", "Ok").Wait();
-            //Shell.Current.GoToAsync("///shedulePage"); //логин
-          
+           
+            return _user; //возвращаю юзера, мб в будущем пригодится
         }
-        private Users CopyUserFrom1C(string respContent) 
+
+        private Users CopyUserFrom1C(string respContent) //копируем юзера из базы 1с в локальную, для ускорения работы
         {
             Users user = new Users();
             string code = "";
             string role = "";
+
+            //проверяем не пришел ли с сервера пустой json
             if (respContent != "[]")
             {
-                if (respContent.Contains("true"))
+                //смотрим кто нам пришел - препод или студент
+                if (respContent.Contains("true")) 
                 {
+                    //работаем с преподом
                     var jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Teachers>>(respContent);
                     code = jsonObject.First().Code_teacher;
                     role = "Teacher";
                     MainPage.TeacherCode = code;
+                    App.Database.AddTeacher(new Teachers
+                    {
+                        Code_teacher = code,
+                        Name_teacher=jsonObject.First().Name_teacher,
+                        Group_info = jsonObject.First().Group_info,
+                    });
                 }
                 else
                 {
+                    //со студентом
                     var jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Students>>(respContent);
                     code = jsonObject.First().Code_Student;
                     role = "Student";
+                    App.Database.AddStudent(new Students 
+                    { 
+                        Code_Student = jsonObject.First().Code_Student,   
+                        Code_group = jsonObject.First().Code_group,   
+                        Name_group = jsonObject.First().Name_group,
+                        Name_Student = jsonObject.First().Name_Student
+                    });
                 }
 
+                //записываем данные юзера в локальную базу 
                 user.Login = loginEntry.Text;
                 user.Password = passEntry.Text;
                 user.Code = code;
                 user.Role = role;
                 App.Database.AddUser(user);
-                //CurrentUser = user;
-                return user;
+               
+                return user; //возвращаем получившегося юзера
             }
             else return null;
           

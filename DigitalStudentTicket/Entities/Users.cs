@@ -55,4 +55,6 @@ namespace DigitalStudentTicket.Entities
 
         //}
     }
+
+
 }

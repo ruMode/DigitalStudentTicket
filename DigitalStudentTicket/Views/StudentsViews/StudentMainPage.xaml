@@ -1,54 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DigitalStudentTicket.Views.StudentsViews.StudentMainPage" Visual="Material" Title="Студент">
-    <ContentPage.ToolbarItems>
+            xmlns:views="clr-namespace:DigitalStudentTicket.Views.StudentsViews"
+            x:Class="DigitalStudentTicket.Views.StudentsViews.StudentMainPage"
+            Visual="Material"
+            >
+  <!--Pages can be added as references or inline-->
+    <TabbedPage.Children>
+        <views:StudentProfileView Title="Профиль" />
+    </TabbedPage.Children>
+    <TabbedPage.ToolbarItems>
         <ToolbarItem Text="Выход"
                      Clicked="logoutBtn_Clicked" />
-        <ToolbarItem Text="Админ"
-                     Clicked="admin_Clicked" />
-    </ContentPage.ToolbarItems>
-    <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height=".6*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            
-            <StackLayout Spacing="20" Orientation="Horizontal" Margin="10">
-                <StackLayout WidthRequest="180">
-                    <Frame BorderColor="Black">
-                        <Image Aspect="AspectFill"
-                           Source="https://u.9111s.ru/uploads/202112/09/2de331b8f5b07f2f51d7f26027ed9a8b.jpg" HeightRequest="180"/>
-  
-                    </Frame>
-                </StackLayout>
-                <StackLayout>
-                    <Label Text="SureName: " 
-                           FontAttributes="Bold" />
-                    <Label Text="Ivanov " />
-                
-                    <Label Text="Name:"
-                           FontAttributes="Bold" />
-                    <Label Text="Ivan " />
 
-                    <Label Text="Patronymic:"
-                           FontAttributes="Bold" />
-                    <Label Text="Ivanovich" />
-                
-                    <Label Text="Group:"
-                           FontAttributes="Bold" />
-                    <Label Text="IS-407 " />
-                
-                </StackLayout>
-            </StackLayout>
-
-            <StackLayout Grid.Row="1" Spacing="20" VerticalOptions="End" Margin="10">
-                <Button Text="QR-code" />
-                <Button Text="Расписание" />
-            </StackLayout>
-            
-            
-        </Grid>
-    </ContentPage.Content>
-</ContentPage>
+    </TabbedPage.ToolbarItems>
+</TabbedPage>
