@@ -22,7 +22,6 @@ namespace DigitalStudentTicket
 
         static ObservableCollection<SheduleItems> _shedule = new ObservableCollection<SheduleItems>(); //список пара
         public static LessonData _lessonData = new LessonData(); //храним данные о паре
-        public static Dictionary<string, string> _lessonDataDict = new Dictionary<string, string>(); //храним данные о паре
         private bool _isSheduleExist { get; set; } //проверка уже загруженного расписания, чтобы каждый раз при OnAppearing() не посылать запрос на сервер
         public MainPage()
         {
@@ -103,10 +102,6 @@ namespace DigitalStudentTicket
                         _lessonData.group_name = _shedule[2].group_name;
                         _lessonData.code_group = _shedule[2].group_code;
 
-                        //var date = $"{DateTime.Now:dd.MM.yyyy}";
-                        //var listStudents = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Students.Students_extended>>(GetStundentInfoByGroupCode(_lessonData.code_group, _lessonData.index_predmet, TeacherCode, date, _lessonData.para));
-
-                        //
                         await Navigation.PushAsync(scannerPage);
                         GetStudents();
                     }

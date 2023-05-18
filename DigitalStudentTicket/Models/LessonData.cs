@@ -20,7 +20,6 @@ namespace DigitalStudentTicket.Models
         public List<string> pris { get; set; } = new List<string>(); //отметки о присутствии (да/нет), по-умолчанию "да" 
         public List<string> coment { get; set; } = new List<string>();
 
-        public List<string>code { get; set; }
 
     }
     

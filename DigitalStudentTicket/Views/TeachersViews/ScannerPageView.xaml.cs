@@ -20,9 +20,15 @@ namespace DigitalStudentTicket.Views
         {
             InitializeComponent();
         }
+        protected override void OnAppearing()
+        {
+            ZXingScannerView.IsScanning = true; 
+            base.OnAppearing();
+        }
         protected override void OnDisappearing()
         {
             Navigation.RemovePage(this);
+            
             base.OnDisappearing();
 
         }
@@ -30,24 +36,39 @@ namespace DigitalStudentTicket.Views
         {
             MainThread.BeginInvokeOnMainThread(async () =>
              {
-                 
-                 Models.ScanResultStudents newItem = new Models.ScanResultStudents() { Text = result.Text, ScanDate = DateTime.Now.ToLocalTime()};
+                 //ZXingScannerView.IsScanning = false;
+
                  
 
-                 if (ScanResultStudentsListView.Items.FirstOrDefault(i=> i.Text==newItem.Text)!= null)//не работает //работает
+
+                 if (ScanResultStudentsListView.Items.FirstOrDefault(i => i.Text == result.Text) != null)//не работает //работает //не работает
                  {
-                     ScanResultStudentsListView.Items.Remove(newItem);
-                     await DisplayAlert("Ошибка!", "Такой студент уже был отсканирован!", "Ок");
+                     errFrame.IsVisible=true;
+                    // await DisplayAlert("Ошибка!", "Такой студент уже был отсканирован!", "Ок"); 
+                     
                  }
                  else
                  {
+                     Models.ScanResultStudents newItem = new Models.ScanResultStudents() 
+                     { 
+                         Text = MainPage._lessonData.studentSave[MainPage._lessonData.Code_student_J.IndexOf(result.Text)], 
+                         Code=result.Text, 
+                         ScanDate = DateTime.Now.ToLocalTime() 
+                     };
                      ScanResultStudentsListView.Items.Add(newItem);
+                     ScanResultStudentsListView.scansCount++;
+                     //newItem = null;
                      await Navigation.PushAsync(studentsList);
+                     
                  }
              });
         }
 
- 
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            errFrame.IsVisible = false;
+            ZXingScannerView.IsScanning = true; ZXingScannerView.IsAnalyzing = true;
 
+        }
     }
 }

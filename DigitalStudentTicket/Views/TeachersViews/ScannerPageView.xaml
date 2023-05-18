@@ -8,7 +8,15 @@
         <Grid>
             <zxing:ZXingScannerView x:Name="ZXingScannerView" IsScanning="True" OnScanResult="ZXingScannerView_OnScanResult" IsTorchOn="True" />
             <zxing:ZXingDefaultOverlay TopText="Наведите камеру на QR-код студента" BottomText="Сканирование..."/>
-            
+            <Frame x:Name="errFrame" VerticalOptions="End" IsVisible="false" >
+                <StackLayout VerticalOptions="End" Spacing="20">
+                    <Label Text="!!! Ошибка сканирования !!!" FontSize="Title" TextColor="Red"/>
+                    <Label Text="Данный студент уже был отсканирован!" FontSize="Body" HorizontalOptions="CenterAndExpand"/>
+                    <Button Text="Продолжить" VerticalOptions="End"
+                            Clicked="Button_Clicked" />
+
+                </StackLayout>
+            </Frame>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
