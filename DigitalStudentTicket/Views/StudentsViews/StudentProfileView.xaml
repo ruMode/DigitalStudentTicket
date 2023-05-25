@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DigitalStudentTicket.Views.StudentsViews.StudentProfileView" 
-             xmlns:model="clr-namespace:DigitalStudentTicket.Entities"
+             xmlns:zxing ="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             xmlns:zxingcm ="clr-namespace:ZXing.Common;assembly=zxing.portable"
              Visual="Material" Title="Студент"
              >
-
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -14,11 +14,19 @@
             </Grid.RowDefinitions>
             
             <StackLayout Spacing="20" Orientation="Horizontal" Margin="10">
-                <StackLayout WidthRequest="180">
+                <StackLayout >
                     <Frame BorderColor="Black">
-                        <Image Aspect="AspectFill"
-                           Source="https://u.9111s.ru/uploads/202112/09/2de331b8f5b07f2f51d7f26027ed9a8b.jpg" HeightRequest="180"/>
-  
+                        <zxing:ZXingBarcodeImageView  x:Name="QRImage"
+                            IsVisible="true"
+                            HeightRequest="250"
+                            WidthRequest="250"
+                            BarcodeFormat="QR_CODE"
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="FillAndExpand">
+                            <zxing:ZXingBarcodeImageView.BarcodeOptions>
+                                <zxingcm:EncodingOptions Height="250" Width="250"/>
+                            </zxing:ZXingBarcodeImageView.BarcodeOptions>
+                        </zxing:ZXingBarcodeImageView>
                     </Frame>
                 </StackLayout>
                 <StackLayout>

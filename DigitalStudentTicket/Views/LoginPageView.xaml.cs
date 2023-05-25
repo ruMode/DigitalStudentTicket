@@ -1,4 +1,5 @@
 ﻿using DigitalStudentTicket.Entities;
+using DigitalStudentTicket.Views.StudentsViews;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -144,11 +145,12 @@ namespace DigitalStudentTicket.Views
                     role = "Student";
                     App.Database.AddStudent(new Students 
                     { 
-                        Code_Student = jsonObject.First().Code_Student,   
+                        Code_Student = StudentProfileView.StudentCode = jsonObject.First().Code_Student,   
                         Code_group = jsonObject.First().Code_group,   
                         Name_group = jsonObject.First().Name_group,
                         Name_Student = jsonObject.First().Name_Student
                     });
+
                 }
 
                 //записываем данные юзера в локальную базу 

@@ -84,6 +84,11 @@ namespace DigitalStudentTicket.Data
             return _database.Table<Teachers>().Where(i=> i.Code_teacher == teacherCode).FirstOrDefaultAsync().Result;
         }
 
+        public Students GetStudent (string studentCode) //получение юзера по айди
+        {
+            return _database.Table<Students>().Where(i=> i.Code_Student == studentCode).FirstOrDefaultAsync().Result;
+        }
+
 
         #endregion
 
@@ -98,7 +103,7 @@ namespace DigitalStudentTicket.Data
         public void DeleteAllUsers()
         {
              _database.DropTableAsync<Users>().Wait();
-             _database.DropTableAsync<Teachers>().Wait();
+             //_database.DropTableAsync<Teachers>().Wait();
             Preferences.Clear();
         }
         #endregion

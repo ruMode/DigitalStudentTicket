@@ -8,7 +8,6 @@ namespace DigitalStudentTicket
     public partial class AppShell : Shell
     {
         private Stack<ShellNavigationState> Uri { get; set; } // Navigation stack.  
-        private ShellNavigationState temp;
         public  AppShell()
         {
             InitializeComponent();
