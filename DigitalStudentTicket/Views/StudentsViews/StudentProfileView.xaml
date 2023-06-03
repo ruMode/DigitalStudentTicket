@@ -9,53 +9,44 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height=".6*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             
-            <StackLayout Spacing="20" Orientation="Horizontal" Margin="10">
-                <StackLayout >
-                    <Frame BorderColor="Black">
-                        <zxing:ZXingBarcodeImageView  x:Name="QRImage"
+            <StackLayout Spacing="20" Margin="10" Orientation="Horizontal">
+                
+                    <Frame BorderColor="Black" Padding="0" x:Name="QRFrame">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </Frame.GestureRecognizers>
+                        <zxing:ZXingBarcodeImageView  x:Name="QRImage" 
                             IsVisible="true"
-                            HeightRequest="250"
-                            WidthRequest="250"
                             BarcodeFormat="QR_CODE"
                             VerticalOptions="FillAndExpand"
                             HorizontalOptions="FillAndExpand">
-                            <zxing:ZXingBarcodeImageView.BarcodeOptions>
-                                <zxingcm:EncodingOptions Height="250" Width="250"/>
-                            </zxing:ZXingBarcodeImageView.BarcodeOptions>
+                          
                         </zxing:ZXingBarcodeImageView>
                     </Frame>
-                </StackLayout>
+
+                
                 <StackLayout>
-                    <Label Text="Name:"
-                           FontAttributes="Bold" />
-                    <Label Text="{Binding Name_Student}" />
+                    <Label Text="ФИО:"
+                           FontAttributes="Bold" FontSize="Title"/>
+                    <Label Text="{Binding Name_Student}" FontSize="Large"/>
                 
-                    <Label Text="Group:"
-                           FontAttributes="Bold" />
-                    <Label Text="{Binding Name_group} " />
-                
+                    <Label Text="Группа:"
+                           FontAttributes="Bold" FontSize="Title"/>
+                    <Label Text="{Binding Name_group} " FontSize="Large"/>
+
                 </StackLayout>
-
-                <!--<CollectionView x:Name="LV">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout>
-                                <Label Text="{Binding Name_Student}" />
-                                <Label Text="{Binding Code_Student}" />
-
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>-->
+                
             </StackLayout>
 
-            <StackLayout Grid.Row="1" Spacing="20" VerticalOptions="End" Margin="10">
-                <Button Text="QR-code" />
-                <Button Text="Расписание" />
+            <StackLayout Grid.Row="1" Spacing="20" VerticalOptions="StartAndExpand" Margin="10">
+                <!--<Button Text="QR-code"/>
+                <Button Text="Расписание" />-->
+                <Label Text="Нажмите на QR-код для демонстрации преподавателю" FontSize="Large" HorizontalTextAlignment="Center" TextColor="LightGray"/>
+
             </StackLayout>
             
             

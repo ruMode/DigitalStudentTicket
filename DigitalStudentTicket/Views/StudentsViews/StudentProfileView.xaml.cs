@@ -1,4 +1,7 @@
-﻿using DigitalStudentTicket.Entities;
+﻿using Android.Content.Res;
+using Android.Provider;
+using Android.Views;
+using DigitalStudentTicket.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,45 +29,37 @@ namespace DigitalStudentTicket.Views.StudentsViews
         protected override void OnAppearing()
         {
             base.OnAppearing();
-             
+
+  
+
             if (StudentCode != null )
             {
                 var st = App.Database.GetStudent(StudentCode);
                 BindingContext = st;
-                QRImage.BarcodeValue = GenerateQR(st.Code_Student).BarcodeValue;
-                
-               // QRImage = GenerateQR(st.Code_Student);
+                QRImage.BarcodeValue = st.Code_Student;
+                QRImage.HeightRequest = 150;
+                QRImage.WidthRequest = 150;
+                QRImage.BarcodeOptions.Height = 150;
+                QRImage.BarcodeOptions.Width = 150;
+
             }
             else
             {
                 var st = App.Database.GetAllStudents().First();
                 BindingContext = st;
-                QRImage.BarcodeValue = GenerateQR(st.Code_Student).BarcodeValue;
+                QRImage.BarcodeValue = st.Code_Student;
+                QRImage.HeightRequest = 150;
+                QRImage.WidthRequest = 150;
+                QRImage.BarcodeOptions.Height = 150;
+                QRImage.BarcodeOptions.Width = 150;
             }
 
         }
-        ZXingBarcodeImageView GenerateQR(string studentCode)
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            var qrCode = new ZXingBarcodeImageView
-            {
-                BarcodeFormat = BarcodeFormat.QR_CODE,
-                BarcodeOptions = new QrCodeEncodingOptions
-                {
-                    Height = 250,
-                    Width = 250,
-                    PureBarcode = true,
-                    QrVersion = 2
-                },
-                BarcodeValue = studentCode,
-                VerticalOptions = LayoutOptions.CenterAndExpand,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-
-            };
-            // Workaround for iOS
-            qrCode.WidthRequest = 250;
-            qrCode.HeightRequest = 250;
-            return qrCode;
+            Navigation.PushModalAsync(new FullscreenQRview(QRImage));
+            
         }
-
     }
 }

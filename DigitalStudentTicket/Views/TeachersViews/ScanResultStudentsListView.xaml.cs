@@ -25,17 +25,6 @@ namespace DigitalStudentTicket.Views
         }
         protected override void OnAppearing()
         {
-            //for (int i = scansCount; i < scansCount+1; i++)
-            //{
-            //    var indexStudent = MainPage._lessonData.Code_student_J.IndexOf(Items[i].Text);
-            //    var studentName = MainPage._lessonData.studentSave.GetRange(indexStudent, 1);
-            //    var stdCode = Items[i].Text;
-            //    if(!_Items.Contains(Items.FirstOrDefault(x=> x.Code==stdCode))) {
-            //        _Items.Add(new ScanResultStudents() { Text = studentName.First(), Code = Items[i].Text, ScanDate = DateTime.Now });
-            //        MainPage._lessonData.pris[indexStudent] = "да";
-            //    }
-            //    else continue;
-            //}
            
             MyListView.ItemsSource = Items;
         }
@@ -45,16 +34,6 @@ namespace DigitalStudentTicket.Views
             base.OnDisappearing();
         }
 
-        async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            if (e.Item == null)
-                return;
-
-            await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
-
-            //Deselect Item
-            ((ListView)sender).SelectedItem = null;
-        }
 
         private async void scanNextBtn_Clicked(object sender, EventArgs e)
         {

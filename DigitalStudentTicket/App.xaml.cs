@@ -26,7 +26,7 @@ namespace DigitalStudentTicket
             InitializeComponent();
 
             MainPage = new AppShell();
-            //Database.DeleteAllUsers();
+           // Database.DeleteAllUsers();
             //Database.AddUser(new Entities.Users { Login = "admin", Password = "1" });
 
 

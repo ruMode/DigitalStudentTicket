@@ -38,9 +38,6 @@ namespace DigitalStudentTicket.Views
              {
                  //ZXingScannerView.IsScanning = false;
 
-                 
-
-
                  if (ScanResultStudentsListView.Items.FirstOrDefault(i => i.Text == result.Text) != null)//не работает //работает //не работает
                  {
                      errFrame.IsVisible=true;

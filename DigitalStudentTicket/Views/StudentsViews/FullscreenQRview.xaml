@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:zxing ="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DigitalStudentTicket.Views.StudentsViews.FullscreenQRview">
+    <ContentPage.Content >
+        <StackLayout x:Name="sL">
+            <Label Text="Это ваш QR-код" VerticalOptions="StartAndExpand"/>
+            <Label Text="предъявите его преподавателю" VerticalOptions="EndAndExpand"/>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

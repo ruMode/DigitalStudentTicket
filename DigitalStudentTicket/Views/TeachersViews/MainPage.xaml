@@ -4,7 +4,7 @@
              x:Class="DigitalStudentTicket.MainPage" Visual="Material" Title="Расписание">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Выход" Clicked="logoutBtn_Clicked"/>
-        <ToolbarItem Text="Админ" Clicked="admin_Clicked"/>
+        <!--<ToolbarItem Text="Админ" Clicked="admin_Clicked"/>-->
     </ContentPage.ToolbarItems>
     <StackLayout Spacing="5"   >
         <!--<Label x:Name="welcomeLabel" Text="" TextTransform="Uppercase" FontSize="Large" TextColor="Black" HorizontalOptions="Center"  />-->

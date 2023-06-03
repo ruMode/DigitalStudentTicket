@@ -38,15 +38,17 @@ namespace DigitalStudentTicket
             //проверяем есть ли загруженное расписание
             if (!_isSheduleExist) { sheduleCV.ItemsSource = GetShedule(TeacherCode).Result; _isSheduleExist = true; }
             else return;
-
+            sheduleCV.SelectedItem = null;
+            
         }
+       
 
         private async void sheduleCV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch ((e.CurrentSelection[0] as SheduleItems).para)
             {
                 case "1":
-                    if (DateTime.Now.Hour >= 10 && DateTime.Now.Minute >= 5)
+                    if (DateTime.Now.Hour >= 20 && DateTime.Now.Minute >= 5)
                     {
                         await DisplayAlert("Ошибка!", "Пара уже закончилась. \n Отметки посещаемости недоступны", "Ок");
                     }
@@ -83,6 +85,7 @@ namespace DigitalStudentTicket
 
                         GetStudents();
                         await Navigation.PushAsync(scannerPage);
+                        
                     }
                     break;
 
@@ -150,6 +153,7 @@ namespace DigitalStudentTicket
                     break;
 
                 default: break;
+                    
             }
         }
 
