@@ -20,12 +20,9 @@ namespace DigitalStudentTicket.Views
         public ScanResultStudentsListView()
         {
             InitializeComponent();
-
-
         }
         protected override void OnAppearing()
         {
-           
             MyListView.ItemsSource = Items;
         }
         protected override void OnDisappearing()
@@ -34,12 +31,9 @@ namespace DigitalStudentTicket.Views
             base.OnDisappearing();
         }
 
-
         private async void scanNextBtn_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(MainPage.scannerPage);
-            //await Navigation.PopAsync();
-            
         }
 
         private async void aproveResultsBtn_Clicked(object sender, EventArgs e)
@@ -62,7 +56,8 @@ namespace DigitalStudentTicket.Views
 
             await DisplayAlert("Подтверждение", "Результаты успешно отправлены!", "Назад");
             await Navigation.PopAsync();
-            Items.Clear(); 
+            Items.Clear();
+
         }
     }
 }

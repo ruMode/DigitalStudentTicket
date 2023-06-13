@@ -36,16 +36,14 @@ namespace DigitalStudentTicket.Views
         {
             MainThread.BeginInvokeOnMainThread(async () =>
              {
-                 //ZXingScannerView.IsScanning = false;
-
-                 if (ScanResultStudentsListView.Items.FirstOrDefault(i => i.Text == result.Text) != null)//не работает //работает //не работает
+                 if (ScanResultStudentsListView.Items.FirstOrDefault(i => i.Text == result.Text) != null)
                  {
-                     errFrame.IsVisible=true;
-                    // await DisplayAlert("Ошибка!", "Такой студент уже был отсканирован!", "Ок"); 
-                     
+                     //выдаем ошибку если студент был отсканирован повторно
+                     errFrame.IsVisible=true;                     
                  }
                  else
                  {
+                     //создаем список отсканированный студентов
                      Models.ScanResultStudents newItem = new Models.ScanResultStudents() 
                      { 
                          Text = MainPage._lessonData.studentSave[MainPage._lessonData.Code_student_J.IndexOf(result.Text)], 
@@ -54,7 +52,6 @@ namespace DigitalStudentTicket.Views
                      };
                      ScanResultStudentsListView.Items.Add(newItem);
                      ScanResultStudentsListView.scansCount++;
-                     //newItem = null;
                      await Navigation.PushAsync(studentsList);
                      
                  }

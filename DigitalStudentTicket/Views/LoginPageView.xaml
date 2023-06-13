@@ -3,34 +3,46 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DigitalStudentTicket.Views.LoginPageView"
              Visual="Material" Title="Авторизация" >
+    
     <ContentPage.Content>
-        
-         <ScrollView >
-            <StackLayout x:Name="mainSL" Orientation="Vertical" HorizontalOptions="CenterAndExpand"  Spacing="20" Margin="20" >
-                <Image Source="logo3.png" Margin="0, 30" />
+        <ScrollView >
+            <StackLayout x:Name="mainSL" 
+                         Orientation="Vertical" 
+                         HorizontalOptions="CenterAndExpand"  
+                         Spacing="20" 
+                         Margin="20" >
+                <Image Source="logo3.png" 
+                       Margin="0, 30" />
 
 
-                <Label Text="Логин" TextColor="Black"
-                        
+                <Label Text="Логин" 
+                       TextColor="Black"
                         FontFamily="Open Sans"
                         FontSize="Title"/>
-
-                <Entry x:Name="loginEntry" Placeholder="Введите логин или адрес эл.почты" PlaceholderColor="Gray" TextColor="Black" ClearButtonVisibility="WhileEditing" />
-
-
-                <Label Text="Пароль" TextColor="Black"
+                <Entry x:Name="loginEntry" 
+                       Placeholder="Введите логин или адрес эл.почты" 
+                       PlaceholderColor="Gray" 
+                       TextColor="Black" 
+                       ClearButtonVisibility="WhileEditing" />
+                
+                <Label Text="Пароль" 
+                       TextColor="Black"
                         FontFamily="Open Sans"
                         FontSize="Title" />
-
-
-                <Entry x:Name="passEntry" Placeholder="Введите пароль" PlaceholderColor="Gray" IsPassword="True" TextColor="Black" ClearButtonVisibility="WhileEditing" />
-
-                <Button x:Name="logInBtn" Text="Войти" Clicked="logInBtn_Clicked" BackgroundColor="#005a97" TextColor="GhostWhite" Margin="0, 20" />
-
+                <Entry x:Name="passEntry" 
+                       Placeholder="Введите пароль" 
+                       PlaceholderColor="Gray" 
+                       IsPassword="True" 
+                       TextColor="Black" 
+                       ClearButtonVisibility="WhileEditing" />
+                
+                <Button x:Name="logInBtn" 
+                        Text="Войти" 
+                        Clicked="logInBtn_Clicked" 
+                        BackgroundColor="#005a97" 
+                        TextColor="GhostWhite" 
+                        Margin="0, 20" />
             </StackLayout>
-
         </ScrollView>
-            
-
     </ContentPage.Content>
 </ContentPage>

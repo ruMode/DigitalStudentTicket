@@ -13,8 +13,6 @@ namespace DigitalStudentTicket.Data
         public DST_Database(string dbPath)
         {
             _database = new SQLiteAsyncConnection(dbPath); //соединяемся с базой
-
-            //_database.DropTableAsync<Users>().Wait();
             _database.CreateTablesAsync<Users, Teachers, Students>().Wait(); //создаем таблицы, если они не были созданы ранее
             
         }
@@ -71,20 +69,20 @@ namespace DigitalStudentTicket.Data
         {
             return _database.Table<Teachers>().ToListAsync().Result;
         }
-        public List<Students> GetAllStudents() //получение списка всех преподов
+        public List<Students> GetAllStudents() //получение списка всех студентов
         {
             return _database.Table<Students>().ToListAsync().Result;
         }
-        public Users GetUser (Users user) //получение юзера по айди
+        public Users GetUser (Users user) //получение юзера
         {
             return _database.Table<Users>().Where(i=> i.Id == user.Id).FirstOrDefaultAsync().Result;
         }
-        public Teachers GetTeacher (string teacherCode) //получение юзера по айди
+        public Teachers GetTeacher (string teacherCode) //получение препода
         {
             return _database.Table<Teachers>().Where(i=> i.Code_teacher == teacherCode).FirstOrDefaultAsync().Result;
         }
 
-        public Students GetStudent (string studentCode) //получение юзера по айди
+        public Students GetStudent (string studentCode) //получение студента
         {
             return _database.Table<Students>().Where(i=> i.Code_Student == studentCode).FirstOrDefaultAsync().Result;
         }
@@ -103,7 +101,6 @@ namespace DigitalStudentTicket.Data
         public void DeleteAllUsers()
         {
              _database.DropTableAsync<Users>().Wait();
-             //_database.DropTableAsync<Teachers>().Wait();
             Preferences.Clear();
         }
         #endregion

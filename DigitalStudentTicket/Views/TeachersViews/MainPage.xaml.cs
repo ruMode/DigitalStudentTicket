@@ -20,7 +20,7 @@ namespace DigitalStudentTicket
         public string CurrentDate { get; set; } = $"Сегодня: {DateTime.Now.ToShortDateString()}г. ({DateTime.Now.DayOfWeek})"; //отображаем текущую дату
         public static string TeacherCode { get; set; } //поле для записи кода препода
 
-        static ObservableCollection<SheduleItems> _shedule = new ObservableCollection<SheduleItems>(); //список пара
+        public static ObservableCollection<SheduleItems> _shedule = new ObservableCollection<SheduleItems>(); //список пара
         public static LessonData _lessonData = new LessonData(); //храним данные о паре
         private bool _isSheduleExist { get; set; } //проверка уже загруженного расписания, чтобы каждый раз при OnAppearing() не посылать запрос на сервер
         public MainPage()
@@ -48,108 +48,38 @@ namespace DigitalStudentTicket
             switch ((e.CurrentSelection[0] as SheduleItems).para)
             {
                 case "1":
-                    if (DateTime.Now.Hour >= 20 && DateTime.Now.Minute >= 5)
-                    {
+                    if (DateTime.Now.Hour >= 10 && DateTime.Now.Minute >= 5)
                         await DisplayAlert("Ошибка!", "Пара уже закончилась. \n Отметки посещаемости недоступны", "Ок");
-                    }
-                    else
-                    {
-                        //записываем данные кликнутой пары
-                        _lessonData.index_predmet = _shedule[0].code_predmet;
-                        _lessonData.name_predmet = _shedule[0].name_predmet;
-                        _lessonData.para = 1;
-                        _lessonData.theme = "";
-                        _lessonData.group_name = _shedule[0].group_name;
-                        _lessonData.code_group = _shedule[0].group_code;
-
-                        GetStudents();
-                        await Navigation.PushAsync(scannerPage);
-                    }
+                    else 
+                        await SaveLessonData(0); //записываем данные кликнутой пары
                     break;
                     
                 case "2":
-
                     if (DateTime.Now.Hour >= 11 && DateTime.Now.Minute >= 50)
-                    {
                         await DisplayAlert("Ошибка!", "Пара уже закончилась. \n Отметки посещаемости недоступны", "Ок");
-                    }
-                    else
-                    {
-                        //записываем данные кликнутой пары
-                        _lessonData.index_predmet = _shedule[1].code_predmet;
-                        _lessonData.name_predmet = _shedule[1].name_predmet;
-                        _lessonData.para = 2;
-                        _lessonData.theme = "";
-                        _lessonData.group_name = _shedule[1].group_name;
-                        _lessonData.code_group = _shedule[1].group_code;
-
-                        GetStudents();
-                        await Navigation.PushAsync(scannerPage);
-                        
-                    }
+                    else 
+                        await SaveLessonData(1);
                     break;
 
                 case "3":
-
                     if (DateTime.Now.Hour >= 13 && DateTime.Now.Minute >= 55)
-                    {
                         await DisplayAlert("Ошибка!", "Пара уже закончилась. \n Отметки посещаемости недоступны", "Ок");
-                    }
-                    else
-                    {
-                        //записываем данные кликнутой пары
-                        _lessonData.index_predmet = _shedule[2].code_predmet;
-                        _lessonData.name_predmet = _shedule[2].name_predmet;
-                        _lessonData.para = 3;
-                        _lessonData.theme = "";
-                        _lessonData.group_name = _shedule[2].group_name;
-                        _lessonData.code_group = _shedule[2].group_code;
-
-                        await Navigation.PushAsync(scannerPage);
-                        GetStudents();
-                    }
+                    else 
+                        await SaveLessonData(2);
                     break;
+
                 case "4":
-
                     if (DateTime.Now.Hour >= 15 && DateTime.Now.Minute >= 40)
-                    {
                         await DisplayAlert("Ошибка!", "Пара уже закончилась. \n Отметки посещаемости недоступны", "Ок");
-                    }
-                    else
-                    {
-                        //записываем данные кликнутой пары
-                        _lessonData.index_predmet = _shedule[3].code_predmet;
-                        _lessonData.name_predmet = _shedule[3].name_predmet;
-                        _lessonData.para = 4;
-                        _lessonData.theme = "";
-                        _lessonData.group_name = _shedule[3].group_name;
-                        _lessonData.code_group = _shedule[3].group_code;
-
-                        
-                        //GetStudents();
-                        await Navigation.PushAsync(scannerPage);
-                        GetStudents();
-                    }
+                    else 
+                        await SaveLessonData(3);
                     break;
-                case "5":
 
+                case "5":
                     if (DateTime.Now.Hour >= 16 && DateTime.Now.Minute >= 50)
-                    {
                         await DisplayAlert("Ошибка!", "Пара уже закончилась. \n Отметки посещаемости недоступны", "Ок");
-                    }
                     else
-                    {
-                        //записываем данные кликнутой пары
-                        _lessonData.index_predmet = _shedule[4].code_predmet;
-                        _lessonData.name_predmet = _shedule[4].name_predmet;
-                        _lessonData.para = 5;
-                        _lessonData.theme = "";
-                        _lessonData.group_name = _shedule[4].group_name;
-                        _lessonData.code_group = _shedule[4].group_code;
-                        
-                        await Navigation.PushAsync(scannerPage);
-                        GetStudents();
-                    }
+                        await SaveLessonData(4);
                     break;
 
                 default: break;
@@ -157,10 +87,24 @@ namespace DigitalStudentTicket
             }
         }
 
+        private async Task SaveLessonData(int num)
+        {
+            _lessonData.index_predmet = _shedule[num].code_predmet;
+            _lessonData.name_predmet = _shedule[num].name_predmet;
+            _lessonData.para = num+1;
+            _lessonData.theme = "";
+            _lessonData.group_name = _shedule[num].group_name;
+            _lessonData.code_group = _shedule[num].group_code;
+
+            GetStudents();
+            await Navigation.PushAsync(scannerPage);
+        }
+
         private void GetStudents()
         {
             var date = $"{DateTime.Now:dd.MM.yyyy}";
-            var listStudents = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Students.Students_extended>>(GetStundentInfoByGroupCode(_lessonData.code_group, _lessonData.index_predmet, TeacherCode, date, _lessonData.para));
+            var listStudents = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Students.Students_extended>>(
+                GetStundentInfoByGroupCode(_lessonData.code_group, _lessonData.index_predmet, TeacherCode, date, _lessonData.para));
 
             for (int i = 0; i < listStudents.Count; i++)
             {
@@ -196,13 +140,8 @@ namespace DigitalStudentTicket
                 var shedule = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SheduleItems>>(respContent);
                 _shedule.Clear();
                 foreach (var item in shedule)
-                {
                     _shedule.Add(item);
-
-                }
-
                 return _shedule;
-
             }
             catch (Exception e)
             {
@@ -211,7 +150,7 @@ namespace DigitalStudentTicket
             }
         }
 
-        //!!!доделать
+        
         private async void UpdateSheduleBnt_Clicked(object sender, EventArgs e)
         {
             if (await GetShedule(TeacherCode) != null)
@@ -225,8 +164,6 @@ namespace DigitalStudentTicket
         {
             //    запрос
             var client = new RestClient("http://kamtk.ru/BaseKPK/hs/El_zurnal6");
-            //client.Timeout = -1;
-
             var request = new RestRequest() { Method = Method.Post };
             request.AddHeader("Authorization", "Basic 0KHQsNC50YI6");
             request.AddHeader("Content-Type", "text/plain");

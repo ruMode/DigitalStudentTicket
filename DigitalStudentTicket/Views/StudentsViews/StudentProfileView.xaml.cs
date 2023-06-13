@@ -30,12 +30,11 @@ namespace DigitalStudentTicket.Views.StudentsViews
         {
             base.OnAppearing();
 
-  
-
-            if (StudentCode != null )
+            if (StudentCode != null ) //проверка на пустоту кода студента
             {
-                var st = App.Database.GetStudent(StudentCode);
+                var st = App.Database.GetStudent(StudentCode); //ищем в базе нужного студента
                 BindingContext = st;
+                //формируем QR-код
                 QRImage.BarcodeValue = st.Code_Student;
                 QRImage.HeightRequest = 150;
                 QRImage.WidthRequest = 150;
@@ -43,10 +42,11 @@ namespace DigitalStudentTicket.Views.StudentsViews
                 QRImage.BarcodeOptions.Width = 150;
 
             }
-            else
+            else //если код студента пустой, то выбираем первого студента из базы
             {
                 var st = App.Database.GetAllStudents().First();
                 BindingContext = st;
+                //формируем QR-код
                 QRImage.BarcodeValue = st.Code_Student;
                 QRImage.HeightRequest = 150;
                 QRImage.WidthRequest = 150;

@@ -74,9 +74,7 @@ namespace DigitalStudentTicket.Views
 
         private string IsUserExist1C(string login, string pass)
         {
-            //проверяем
-            //{
-            // хттп запрос к базе 1с 
+            //хттп запрос к базе 1с 
            
             var client = new HttpClient();
             client.Timeout = TimeSpan.FromMinutes(5);
@@ -84,13 +82,10 @@ namespace DigitalStudentTicket.Views
             request.Headers.Add("Authorization", "Basic 0KHQsNC50YI6"); //заголовки базовой авторизации
 
             var response = client.SendAsync(request).Result;
-
             var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result; //получаем строку с ответом сервера
              
             return respContent; //возвращаем полученный ответ от сервера
             
-            //}
-           
         }
 
         private Users Login( Users _user) //надо принимать экземпляр класса юзера
@@ -118,7 +113,6 @@ namespace DigitalStudentTicket.Views
             Users user = new Users();
             string code = "";
             string role = "";
-
             //проверяем не пришел ли с сервера пустой json
             if (respContent != "[]")
             {
@@ -151,7 +145,6 @@ namespace DigitalStudentTicket.Views
                         Name_group = jsonObject.First().Name_group,
                         Name_Student = jsonObject.First().Name_Student
                     });
-
                 }
 
                 //записываем данные юзера в локальную базу 

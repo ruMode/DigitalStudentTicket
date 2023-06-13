@@ -12,10 +12,9 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            
+
             <StackLayout Spacing="20" Margin="10" Orientation="Horizontal">
-                
-                    <Frame BorderColor="Black" Padding="0" x:Name="QRFrame">
+                <Frame BorderColor="Black" Padding="0" x:Name="QRFrame">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                         </Frame.GestureRecognizers>
@@ -28,7 +27,6 @@
                         </zxing:ZXingBarcodeImageView>
                     </Frame>
 
-                
                 <StackLayout>
                     <Label Text="ФИО:"
                            FontAttributes="Bold" FontSize="Title"/>
@@ -43,13 +41,8 @@
             </StackLayout>
 
             <StackLayout Grid.Row="1" Spacing="20" VerticalOptions="StartAndExpand" Margin="10">
-                <!--<Button Text="QR-code"/>
-                <Button Text="Расписание" />-->
                 <Label Text="Нажмите на QR-код для демонстрации преподавателю" FontSize="Large" HorizontalTextAlignment="Center" TextColor="LightGray"/>
-
             </StackLayout>
-            
-            
         </Grid>
     </ContentPage.Content>
 </ContentPage>
