@@ -59,32 +59,44 @@ namespace DigitalStudentTicket.Views
                 }
                 else
                 {
-                    Users user1c = CopyUserFrom1C(IsUserExist1C(loginEntry.Text, passEntry.Text));
-                    //проверка в 1с
-                    if ( user1c != null)
+                    try
                     {
-                        //логин
-                        Login(user1c); //передаем юзера
+                        Users user1c = CopyUserFrom1C(IsUserExist1C(loginEntry.Text, passEntry.Text));
+                        //проверка в 1с
+                        if (user1c != null)
+                        {
+                            //логин
+                            Login(user1c); //передаем юзера
+                        }
+                        else await DisplayAlert("Ошибка авторизации", "Неправильный логин или пароль!", "Ок");
+                        mainSL.IsEnabled = true; logInBtn.BackgroundColor = Color.FromHex("#005a97");
+
                     }
-                    else await DisplayAlert("Ошибка авторизации", "Неправильный логин или пароль!", "Ок"); 
-                    mainSL.IsEnabled = true; logInBtn.BackgroundColor = Color.FromHex("#005a97");
+                    catch (Exception ex)
+                    {
+                        await DisplayAlert("Error", ex.Message, "ok");
+                        
+                        throw;  
+                    }
                 }
-            }         
+            }
+            mainSL.IsEnabled = true;       
         }
 
         private string IsUserExist1C(string login, string pass)
         {
             //хттп запрос к базе 1с 
-           
+            
             var client = new HttpClient();
             client.Timeout = TimeSpan.FromMinutes(5);
             var request = new HttpRequestMessage(HttpMethod.Get, $"https://kamtk.ru/BaseKPK/hs/El_zurnal7?login={login}&password={pass}");
             request.Headers.Add("Authorization", "Basic 0KHQsNC50YI6"); //заголовки базовой авторизации
-
-            var response = client.SendAsync(request).Result;
-            var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result; //получаем строку с ответом сервера
-             
-            return respContent; //возвращаем полученный ответ от сервера
+           
+                var response = client.SendAsync(request).Result;
+                var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result; //получаем строку с ответом сервера
+            
+                respContent = respContent.Substring(0,respContent.IndexOf("G")-4) + "}]";
+                return respContent; //возвращаем полученный ответ от сервера
             
         }
 
@@ -108,55 +120,59 @@ namespace DigitalStudentTicket.Views
             return _user; //возвращаю юзера, мб в будущем пригодится
         }
 
-        private Users CopyUserFrom1C(string respContent) //копируем юзера из базы 1с в локальную, для ускорения работы
+        private  Users CopyUserFrom1C(string respContent) //копируем юзера из базы 1с в локальную, для ускорения работы
         {
             Users user = new Users();
             string code = "";
             string role = "";
+            
             //проверяем не пришел ли с сервера пустой json
             if (respContent != "[]")
-            {
-                //смотрим кто нам пришел - препод или студент
-                if (respContent.Contains("true")) 
                 {
-                    //работаем с преподом
-                    var jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Teachers>>(respContent);
-                    code = jsonObject.First().Code_teacher;
-                    role = "Teacher";
-                    MainPage.TeacherCode = code;
-                    App.Database.AddTeacher(new Teachers
+                    //смотрим кто нам пришел - препод или студент
+                    if (respContent.Contains("true"))
                     {
-                        Code_teacher = code,
-                        Name_teacher=jsonObject.First().Name_teacher,
-                        //Group_info = jsonObject.First().Group_info,
-                        //DL = jsonObject.First().DL
-                    });
-                }
-                else
-                {
-                    //со студентом
-                    var jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Students>>(respContent);
-                    code = jsonObject.First().Code_Student;
-                    role = "Student";
-                    App.Database.AddStudent(new Students 
-                    { 
-                        Code_Student = StudentProfileView.StudentCode = jsonObject.First().Code_Student,   
-                        Code_group = jsonObject.First().Code_group,   
-                        Name_group = jsonObject.First().Name_group,
-                        Name_Student = jsonObject.First().Name_Student
-                    });
-                }
+                        //работаем с преподом
+                        var jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Teachers>>(respContent);
+                        code = jsonObject.First().Code_teacher;
+                        role = "Teacher";
+                        MainPage.TeacherCode = code;
+                        App.Database.AddTeacher(new Teachers
+                        {
+                            Code_teacher = code,
+                            Name_teacher = jsonObject.First().Name_teacher,
+                            //Group_info = jsonObject.First().Group_info,
+                            //DL = jsonObject.First().DL
+                        });
+                    }
+                    else
+                    {
+                        //со студентом
+                        var jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Students>>(respContent);
+                        code = jsonObject.First().Code_Student;
+                        role = "Student";
+                        App.Database.AddStudent(new Students
+                        {
+                            Code_Student = StudentProfileView.StudentCode = jsonObject.First().Code_Student,
+                            Code_group = jsonObject.First().Code_group,
+                            Name_group = jsonObject.First().Name_group,
+                            Name_Student = jsonObject.First().Name_Student
+                        });
+                    }
 
-                //записываем данные юзера в локальную базу 
-                user.Login = loginEntry.Text;
-                user.Password = passEntry.Text;
-                user.Code = code;
-                user.Role = role;
-                App.Database.AddUser(user);
-               
-                return user; //возвращаем получившегося юзера
-            }
-            else return null;
+                    //записываем данные юзера в локальную базу 
+                    user.Login = loginEntry.Text;
+                    user.Password = passEntry.Text;
+                    user.Code = code;
+                    user.Role = role;
+                    App.Database.AddUser(user);
+
+                    return user; //возвращаем получившегося юзера
+                }
+                else return null;
+
+            
+            
           
         }
 
