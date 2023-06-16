@@ -128,8 +128,8 @@ namespace DigitalStudentTicket.Views
                     {
                         Code_teacher = code,
                         Name_teacher=jsonObject.First().Name_teacher,
-                        Group_info = jsonObject.First().Group_info,
-                        DL = jsonObject.First().DL
+                        //Group_info = jsonObject.First().Group_info,
+                        //DL = jsonObject.First().DL
                     });
                 }
                 else
