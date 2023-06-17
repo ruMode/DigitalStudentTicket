@@ -131,11 +131,12 @@ namespace DigitalStudentTicket
             var request = new HttpRequestMessage(HttpMethod.Get, $"https://kamtk.ru/BaseKPK/hs/El_zurnal11?code_teacher={teacherCode}&date_lessons=2");
             request.Headers.Add("Authorization", "Basic 0KHQsNC50YI6"); //заголовки базовой авторизации
 
-            var response = client.SendAsync(request).Result;
+             try
+            {   
+                var response = client.SendAsync(request).Result;
 
-            var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result;
-            try
-            {
+                var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result;
+           
                 //конвертируем полученный JSON в объекты класса SheduleItems (непосредственно само расписание)
                 var shedule = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SheduleItems>>(respContent);
                 _shedule.Clear();
@@ -143,9 +144,9 @@ namespace DigitalStudentTicket
                     _shedule.Add(item);
                 return _shedule;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                await DisplayAlert(Title, e.Message, "ok");
+                await DisplayAlert("Error", ex.Message, "ok");
                 throw;
             }
         }
@@ -176,12 +177,21 @@ namespace DigitalStudentTicket
                                 $"\"para\": \"{para}\"" +
                             $"}}";
             request.AddParameter("text/plain", rqstBody, ParameterType.RequestBody);
-            RestResponse response = client.Execute(request);
+            try
+            {
+                RestResponse response = client.Execute(request);
 
-            var editedResponse = response.Content.Substring(response.Content.IndexOf("]") + 16);
-            editedResponse = editedResponse.Remove(editedResponse.IndexOf("]") + 1);
+                var editedResponse = response.Content.Substring(response.Content.IndexOf("]") + 16);
+                editedResponse = editedResponse.Remove(editedResponse.IndexOf("]") + 1);
 
-            return editedResponse;
+                return editedResponse;
+
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("Error", ex.Message, "ok");
+                throw;
+            }
         }
 
 

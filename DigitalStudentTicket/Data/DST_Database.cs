@@ -14,7 +14,7 @@ namespace DigitalStudentTicket.Data
         {
             _database = new SQLiteAsyncConnection(dbPath); //соединяемся с базой
             _database.CreateTablesAsync<Users, Teachers, Students>().Wait(); //создаем таблицы, если они не были созданы ранее
-            
+            _database.CreateTableAsync<SavedLessonData>().Wait();
         }
 
         public Users VerifyUser(string login, string password)
@@ -52,6 +52,10 @@ namespace DigitalStudentTicket.Data
 
             else return null;
             
+        }       
+        public Task<int> SaveLessonData (SavedLessonData data) //создание студента
+        {
+           return _database.InsertAsync(data);
         }
 
 
@@ -85,6 +89,10 @@ namespace DigitalStudentTicket.Data
         public Students GetStudent (string studentCode) //получение студента
         {
             return _database.Table<Students>().Where(i=> i.Code_Student == studentCode).FirstOrDefaultAsync().Result;
+        }
+        public SavedLessonData GetSavedData() //получение 
+        {
+            return _database.Table<SavedLessonData>().FirstOrDefaultAsync().Result;
         }
 
 

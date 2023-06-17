@@ -1,4 +1,5 @@
-﻿using DigitalStudentTicket.Models;
+﻿using DigitalStudentTicket.Entities;
+using DigitalStudentTicket.Models;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -52,10 +53,29 @@ namespace DigitalStudentTicket.Views
             request.AddHeader("Content-Type", "text/plain");
 
             request.AddParameter("application/json", rqstContent, ParameterType.RequestBody);
-            RestResponse response = client.Execute(request);
 
-            await DisplayAlert("Подтверждение", "Результаты успешно отправлены!", "Назад");
-            await Navigation.PopAsync();
+            try
+            {
+                RestResponse response = client.Execute(request);
+                if (response.IsSuccessful)
+                {
+                    await DisplayAlert("Подтверждение", "Результаты успешно отправлены!", "Назад");
+                    await Navigation.PopAsync();
+                }
+                else
+                {
+                    SavedLessonData data = new SavedLessonData() { ErrorMsg = response.ErrorMessage, JSONData = MainPage._lessonData.ToString() };
+                    await App.Database.SaveLessonData(data);
+                    await DisplayAlert("Error", response.ErrorException.ToString(), "ok");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "ok");
+                throw;
+            }
+            
+
             Items.Clear();
 
         }

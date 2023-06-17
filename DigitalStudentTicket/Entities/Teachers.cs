@@ -11,7 +11,7 @@ namespace DigitalStudentTicket.Entities
         public string DL { get; set; }
         public string Code_teacher { get; set; }
         public string Name_teacher { get; set; }
-        public string Group_info { get; set; }
+        //public string Group_info { get; set; }
 
     }
 }

@@ -91,12 +91,19 @@ namespace DigitalStudentTicket.Views
             client.Timeout = TimeSpan.FromMinutes(5);
             var request = new HttpRequestMessage(HttpMethod.Get, $"https://kamtk.ru/BaseKPK/hs/El_zurnal7?login={login}&password={pass}");
             request.Headers.Add("Authorization", "Basic 0KHQsNC50YI6"); //заголовки базовой авторизации
-           
+            try
+            {
                 var response = client.SendAsync(request).Result;
                 var respContent = response.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result; //получаем строку с ответом сервера
-            
-                respContent = respContent.Substring(0,respContent.IndexOf("G")-4) + "}]";
+                //respContent = respContent.Substring(0,respContent.IndexOf("G")-4) + "}]";
                 return respContent; //возвращаем полученный ответ от сервера
+
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("Error", ex.Message, "ok");
+                throw;
+            }
             
         }
 
