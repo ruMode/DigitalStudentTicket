@@ -28,6 +28,8 @@ namespace DigitalStudentTicket
             InitializeComponent();
             _isSheduleExist = false;
         }
+
+     
         protected override void OnAppearing()
         {
             currentDateLabel.Text = CurrentDate;
@@ -39,10 +41,39 @@ namespace DigitalStudentTicket
             if (!_isSheduleExist) { sheduleCV.ItemsSource = GetShedule(TeacherCode).Result; _isSheduleExist = true; }
             else return;
             sheduleCV.SelectedItem = null;
-            
-        }
-       
 
+            if (App.Database.GetSavedData() != null)
+            {
+                var da = DisplayAlert("Внимание!", "У вас есть неотправленные данные. \nОтправить?", "Yes", "No");
+                da.Start();
+                if (!da.IsCanceled)
+                {
+                    Task.Run(SendData);
+                }
+            }
+        }
+        
+        private  Task SendData()
+        {
+            try
+            {
+                var client = new RestClient("http://localhost/kamtk/hs/SetDataLesson");
+                var request = new RestRequest() { Method = Method.Post };
+                request.AddHeader("Authorization", "Basic 0KHQsNC50YI6");
+                request.AddHeader("Content-Type", "text/plain");
+                var  rqstContent = Newtonsoft.Json.JsonConvert.SerializeObject(App.Database.GetSavedData().JSONData);
+                request.AddParameter("application/json", rqstContent, ParameterType.RequestBody);
+                RestResponse response = client.Execute(request);
+                return DisplayAlert("Подтверждение", "Результаты успешно отправлены!", "Назад");
+                
+            }
+            catch (Exception ex)
+            {
+                return DisplayAlert("Подтверждение", ex.Message, "Ок");
+                throw;
+            }
+
+        }
         private async void sheduleCV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch ((e.CurrentSelection[0] as SheduleItems).para)
