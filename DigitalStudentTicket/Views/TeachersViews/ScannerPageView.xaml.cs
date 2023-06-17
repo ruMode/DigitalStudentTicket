@@ -36,7 +36,7 @@ namespace DigitalStudentTicket.Views
         {
             MainThread.BeginInvokeOnMainThread(async () =>
              {
-                 if (ScanResultStudentsListView.Items.FirstOrDefault(i => i.Text == result.Text) != null)
+                 if (ScanResultStudentsListView.Items.FirstOrDefault(i => i.Code == result.Text) != null)
                  {
                      //выдаем ошибку если студент был отсканирован повторно
                      errFrame.IsVisible=true;                     
@@ -46,7 +46,7 @@ namespace DigitalStudentTicket.Views
                      //создаем список отсканированный студентов
                      Models.ScanResultStudents newItem = new Models.ScanResultStudents() 
                      { 
-                         Text = MainPage._lessonData.studentSave[MainPage._lessonData.Code_student_J.IndexOf(result.Text)], 
+                         Text = MainPage.studentsData.studentSave[MainPage.studentsData.Code_student_J.IndexOf(result.Text)], 
                          Code=result.Text, 
                          ScanDate = DateTime.Now.ToLocalTime() 
                      };
@@ -63,6 +63,13 @@ namespace DigitalStudentTicket.Views
             errFrame.IsVisible = false;
             ZXingScannerView.IsScanning = true; ZXingScannerView.IsAnalyzing = true;
 
+        }
+
+        private async void EndScan_Clicked(object sender, EventArgs e)
+        {
+            ZXingScannerView.IsScanning = true; ZXingScannerView.IsAnalyzing = true;
+            errFrame.IsVisible = false;
+            await Navigation.PushAsync(studentsList);
         }
     }
 }

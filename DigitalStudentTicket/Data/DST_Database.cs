@@ -1,4 +1,5 @@
-﻿using DigitalStudentTicket.Entities;
+﻿using Android.Telephony;
+using DigitalStudentTicket.Entities;
 using SQLite;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -110,6 +111,11 @@ namespace DigitalStudentTicket.Data
         {
              _database.DropTableAsync<Users>().Wait();
             Preferences.Clear();
+        }
+
+        public void DeleteSavedData()
+        {
+            _database.DeleteAllAsync<SavedLessonData>();
         }
         #endregion
     }

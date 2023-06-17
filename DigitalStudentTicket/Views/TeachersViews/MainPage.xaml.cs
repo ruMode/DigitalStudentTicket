@@ -22,6 +22,7 @@ namespace DigitalStudentTicket
 
         public static ObservableCollection<SheduleItems> _shedule = new ObservableCollection<SheduleItems>(); //список пара
         public static LessonData _lessonData = new LessonData(); //храним данные о паре
+        public static LessonData studentsData = new LessonData(); 
         private bool _isSheduleExist { get; set; } //проверка уже загруженного расписания, чтобы каждый раз при OnAppearing() не посылать запрос на сервер
         public MainPage()
         {
@@ -30,7 +31,7 @@ namespace DigitalStudentTicket
         }
 
      
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             currentDateLabel.Text = CurrentDate;
 
@@ -41,37 +42,50 @@ namespace DigitalStudentTicket
             if (!_isSheduleExist) { sheduleCV.ItemsSource = GetShedule(TeacherCode).Result; _isSheduleExist = true; }
             else return;
             sheduleCV.SelectedItem = null;
-
+            
             if (App.Database.GetSavedData() != null)
-            {
-                var da = DisplayAlert("Внимание!", "У вас есть неотправленные данные. \nОтправить?", "Yes", "No");
-                da.Start();
-                if (!da.IsCanceled)
+            { 
+                if ( await DisplayAlert("Внимание!", "У вас есть неотправленные данные. \nОтправить?", "Yes", "No"))
                 {
-                    Task.Run(SendData);
+                    await Task.Run(SendData);
                 }
+                else App.Database.DeleteSavedData();
             }
+            
         }
-        
-        private  Task SendData()
+
+        private void SendData()
         {
-            try
+            MainThread.BeginInvokeOnMainThread(async () => 
             {
-                var client = new RestClient("http://localhost/kamtk/hs/SetDataLesson");
-                var request = new RestRequest() { Method = Method.Post };
-                request.AddHeader("Authorization", "Basic 0KHQsNC50YI6");
-                request.AddHeader("Content-Type", "text/plain");
-                var  rqstContent = Newtonsoft.Json.JsonConvert.SerializeObject(App.Database.GetSavedData().JSONData);
-                request.AddParameter("application/json", rqstContent, ParameterType.RequestBody);
-                RestResponse response = client.Execute(request);
-                return DisplayAlert("Подтверждение", "Результаты успешно отправлены!", "Назад");
-                
-            }
-            catch (Exception ex)
-            {
-                return DisplayAlert("Подтверждение", ex.Message, "Ок");
-                throw;
-            }
+                try
+                {
+                    var client = new RestClient("http://localhost/kamtk/hs/SetDataLesson");
+                    var request = new RestRequest() { Method = Method.Post };
+                    request.AddHeader("Authorization", "Basic 0KHQsNC50YI6");
+                    request.AddHeader("Content-Type", "text/plain");
+                    var rqstContent = App.Database.GetSavedData().JSONData;
+                    request.AddParameter("application/json", rqstContent, ParameterType.RequestBody);
+                    
+                    RestResponse response = client.Execute(request);
+                    if (response.IsSuccessful)
+                    {
+                        App.Database.DeleteSavedData();
+                        await DisplayAlert("Подтверждение", "Результаты успешно отправлены!", "Назад");
+
+                    }
+                    else await DisplayAlert("Ошибка", response.ErrorMessage, "Назад");
+
+
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Ошибка", ex.Message, "Ок");
+                    throw;
+                }
+
+
+            });
 
         }
         private async void sheduleCV_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -80,37 +94,32 @@ namespace DigitalStudentTicket
             {
                 case "1":
                     if (DateTime.Now.Hour >= 10 && DateTime.Now.Minute >= 5)
-                        await DisplayAlert("Ошибка!", "Пара уже закончилась. \n Отметки посещаемости недоступны", "Ок");
-                    else 
-                        await SaveLessonData(0); //записываем данные кликнутой пары
+                        await DisplayAlert("Ошибка!", "Пара уже закончилась!. \n Отметки посещаемости недоступны", "Ок");
+                    else await SaveLessonData(0); //записываем данные кликнутой пары
                     break;
                     
                 case "2":
                     if (DateTime.Now.Hour >= 11 && DateTime.Now.Minute >= 50)
-                        await DisplayAlert("Ошибка!", "Пара уже закончилась. \n Отметки посещаемости недоступны", "Ок");
-                    else 
-                        await SaveLessonData(1);
+                        await DisplayAlert("Ошибка!", "Пара уже закончилась!. \n Отметки посещаемости недоступны", "Ок");
+                    else await SaveLessonData(1);
                     break;
 
                 case "3":
-                    if (DateTime.Now.Hour >= 13 && DateTime.Now.Minute >= 55)
+                    if (DateTime.Now.Hour >= 11 && DateTime.Now.Minute >= 55)
                         await DisplayAlert("Ошибка!", "Пара уже закончилась. \n Отметки посещаемости недоступны", "Ок");
-                    else 
-                        await SaveLessonData(2);
+                    else await SaveLessonData(2);
                     break;
 
                 case "4":
                     if (DateTime.Now.Hour >= 15 && DateTime.Now.Minute >= 40)
                         await DisplayAlert("Ошибка!", "Пара уже закончилась. \n Отметки посещаемости недоступны", "Ок");
-                    else 
-                        await SaveLessonData(3);
+                    else await SaveLessonData(3);
                     break;
 
                 case "5":
                     if (DateTime.Now.Hour >= 16 && DateTime.Now.Minute >= 50)
                         await DisplayAlert("Ошибка!", "Пара уже закончилась. \n Отметки посещаемости недоступны", "Ок");
-                    else
-                        await SaveLessonData(4);
+                    else await SaveLessonData(4);
                     break;
 
                 default: break;
@@ -139,12 +148,8 @@ namespace DigitalStudentTicket
 
             for (int i = 0; i < listStudents.Count; i++)
             {
-                _lessonData.Code_student_J.Add(listStudents[i].code_student);
-                _lessonData.studentSave.Add(listStudents[i].name_student);
-                _lessonData.coment.Add("");
-                _lessonData.Rating.Add("");
-                _lessonData.pris.Add("нет");
-
+                studentsData.Code_student_J.Add(listStudents[i].code_student);
+                studentsData.studentSave.Add(listStudents[i].name_student);
             }
         }
 

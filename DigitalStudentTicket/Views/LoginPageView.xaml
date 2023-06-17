@@ -3,26 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DigitalStudentTicket.Views.LoginPageView"
              Visual="Material" Title="Авторизация" >
-    
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Помощь" Clicked="helpBtn_Clicked"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <ScrollView >
+            
             <StackLayout x:Name="mainSL" 
                          Orientation="Vertical" 
                          HorizontalOptions="CenterAndExpand"  
                          Spacing="20" 
                          Margin="20" >
                 <Image Source="logo3.png" 
-                       Margin="0, 30" />
-
+                       Margin="0, 20" />
 
                 <Label Text="Логин" 
                        TextColor="Black"
                         FontFamily="Open Sans"
                         FontSize="Title"/>
                 <Entry x:Name="loginEntry" 
-                       Placeholder="Введите логин или адрес эл.почты" 
+                       Placeholder="Введите адрес эл.почты" 
                        PlaceholderColor="Gray" 
                        TextColor="Black" 
+                       
                        ClearButtonVisibility="WhileEditing" />
                 
                 <Label Text="Пароль" 
@@ -43,6 +48,7 @@
                         TextColor="GhostWhite" 
                         Margin="0, 20" />
             </StackLayout>
+           
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

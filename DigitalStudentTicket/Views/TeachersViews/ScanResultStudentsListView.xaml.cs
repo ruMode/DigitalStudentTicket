@@ -40,9 +40,18 @@ namespace DigitalStudentTicket.Views
         private async void aproveResultsBtn_Clicked(object sender, EventArgs e)
         {
             //заполняем присутствие
-            foreach (var item in Items)
+            //foreach (var item in Items)
+            //{
+            //    MainPage._lessonData.pris[MainPage._lessonData.Code_student_J.IndexOf(item.Code)] = "да";
+            //}
+
+            for (int i = 0; i < Items.Count; i++)
             {
-                MainPage._lessonData.pris[MainPage._lessonData.Code_student_J.IndexOf(item.Code)] = "да";
+                MainPage._lessonData.Code_student_J.Add(Items[i].Code); 
+                MainPage._lessonData.studentSave.Add(Items[i].Text); 
+                MainPage._lessonData.coment.Add("");
+                MainPage._lessonData.Rating.Add("");
+                MainPage._lessonData.pris.Add("да");
             }
 
             var rqstContent = Newtonsoft.Json.JsonConvert.SerializeObject(MainPage._lessonData);
@@ -64,17 +73,20 @@ namespace DigitalStudentTicket.Views
                 }
                 else
                 {
-                    SavedLessonData data = new SavedLessonData() { ErrorMsg = response.ErrorMessage, JSONData = MainPage._lessonData.ToString() };
+                    SavedLessonData data = new SavedLessonData() { ErrorMsg = response.ErrorMessage, JSONData = rqstContent };
                     await App.Database.SaveLessonData(data);
-                    await DisplayAlert("Error", response.ErrorException.ToString(), "ok");
+                    await DisplayAlert("Error", response.ErrorMessage.ToString(), "ok");
+                    await Navigation.PopAsync();
+
                 }
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message, "ok");
+                await Navigation.PopAsync();
                 throw;
             }
-            
+
 
             Items.Clear();
 

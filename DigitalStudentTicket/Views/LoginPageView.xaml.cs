@@ -21,9 +21,9 @@ namespace DigitalStudentTicket.Views
         public LoginPageView()
         {
             InitializeComponent();
-
+            
         }
-
+        
         protected override void OnAppearing()
         {
             mainSL.IsEnabled = false; logInBtn.BackgroundColor = Color.Gray; //блокируем вьюшку
@@ -183,5 +183,9 @@ namespace DigitalStudentTicket.Views
           
         }
 
+        private async void helpBtn_Clicked(object sender, EventArgs e)
+        {
+            await DisplayAlert("Подсказка", "Для авторизации используйте аккаунт Электронного журнала", "ок");
+        }
     }
 }
