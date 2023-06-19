@@ -1,5 +1,4 @@
-﻿using Android.Telephony;
-using DigitalStudentTicket.Entities;
+﻿using DigitalStudentTicket.Entities;
 using SQLite;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -1,18 +1,7 @@
-﻿using Android.Content.Res;
-using Android.Provider;
-using Android.Views;
-using DigitalStudentTicket.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using ZXing;
-using ZXing.Net.Mobile.Forms;
-using ZXing.QrCode;
 
 namespace DigitalStudentTicket.Views.StudentsViews
 {

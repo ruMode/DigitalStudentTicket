@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalStudentTicket.Android", "DigitalStudentTicket.Android\DigitalStudentTicket.Android.csproj", "{F5286D6D-EC1A-4B53-978C-6DF05EBD204A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalStudentTicket", "DigitalStudentTicket\DigitalStudentTicket.csproj", "{AB1A64B5-3DA6-46D5-9D57-545BD44A8B7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalStudentTicket", "DigitalStudentTicket\DigitalStudentTicket.csproj", "{AB1A64B5-3DA6-46D5-9D57-545BD44A8B7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
