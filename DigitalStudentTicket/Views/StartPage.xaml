@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DigitalStudentTicket.Views.StartPage" 
+             NavigationPage.HasNavigationBar="False" 
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="20" VerticalOptions="CenterAndExpand" Spacing="15">
+                <Label Text="Добро пожаловать в мобильное приложение ГАПОУ КПК" 
+                   FontSize="20" FontAttributes="Bold"
+                   LineBreakMode="WordWrap" 
+                   HorizontalTextAlignment="Center" />
+                <Image Source="logoKPK" Aspect="AspectFit" HeightRequest="192" />
+                <Button
+                Text="Сайт кпк мобильная версия" FontSize="18" CornerRadius="25" 
+                Padding="5"
+                BackgroundColor="#005a97" 
+                TextColor="GhostWhite" 
+                Clicked="GoTo_MobileSite"  />
+                <Button 
+                Text="Электронный студенческий" FontSize="18" CornerRadius="25" 
+                Padding="5"
+                BackgroundColor="#005a97" 
+                TextColor="GhostWhite" 
+                Clicked="GoTo_Login"  />
+                <Button 
+                Text="Электронная библиотека" FontSize="18" CornerRadius="25" 
+                Padding="5"
+                BackgroundColor="#005a97" 
+                TextColor="GhostWhite" 
+                Clicked="GoTo_BiblioLogin"  />
+                <Button 
+                Text="Электронная запись (курсы)" FontSize="18" CornerRadius="25" 
+                Padding="5"
+                BackgroundColor="#005a97" 
+                TextColor="GhostWhite" 
+                Clicked="GoTo_Courses"  />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

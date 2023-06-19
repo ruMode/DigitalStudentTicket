@@ -14,11 +14,11 @@ using Xamarin.Forms;
 
 namespace DigitalStudentTicket
 {
-    public partial class MainPage : ContentPage //страница с отображением расписания для преподавателей
+    public partial class MainPage : ContentPage //страница с отображением расписания для преподавательвателей
     {
         public static ScannerPageView scannerPage = new ScannerPageView(); //создаем сканер
         public string CurrentDate { get; set; } = $"Сегодня: {DateTime.Now.ToShortDateString()}г. ({DateTime.Now.DayOfWeek})"; //отображаем текущую дату
-        public static string TeacherCode { get; set; } //поле для записи кода препода
+        public static string TeacherCode { get; set; } //поле для записи кода преподаватель
 
         public static ObservableCollection<SheduleItems> _shedule = new ObservableCollection<SheduleItems>(); //список пара
         public static LessonData _lessonData = new LessonData(); //храним данные о паре

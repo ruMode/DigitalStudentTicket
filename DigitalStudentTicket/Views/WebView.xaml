@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DigitalStudentTicket.Views.WebView"
+             Title="Мобильная версия сайта" Shell.NavBarIsVisible="True">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Назад" Clicked="Go_Back" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <WebView Source="https://kamtk.ru/mobile"></WebView>
+    </ContentPage.Content>
+</ContentPage>

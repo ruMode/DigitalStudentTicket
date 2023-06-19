@@ -9,46 +9,39 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <ScrollView >
-            
+        <ScrollView >            
             <StackLayout x:Name="mainSL" 
                          Orientation="Vertical" 
-                         HorizontalOptions="CenterAndExpand"  
                          Spacing="20" 
-                         Margin="20" >
-                <Image Source="logo3.png" 
-                       Margin="0, 20" />
-
+                         Margin="20" HorizontalOptions="FillAndExpand">
+                <Image Source="logoKPK" Aspect="AspectFit" HeightRequest="192" />                
                 <Label Text="Логин" 
                        TextColor="Black"
-                        FontFamily="Open Sans"
-                        FontSize="Title"/>
+                       FontFamily="Open Sans"
+                       FontSize="Title"/>
                 <Entry x:Name="loginEntry" 
                        Placeholder="Введите адрес эл.почты" 
                        PlaceholderColor="Gray" 
                        TextColor="Black" 
-                       
-                       ClearButtonVisibility="WhileEditing" />
-                
+                       ClearButtonVisibility="WhileEditing" />                
                 <Label Text="Пароль" 
                        TextColor="Black"
-                        FontFamily="Open Sans"
-                        FontSize="Title" />
+                       FontFamily="Open Sans"
+                       FontSize="Title" />
                 <Entry x:Name="passEntry" 
                        Placeholder="Введите пароль" 
                        PlaceholderColor="Gray" 
                        IsPassword="True" 
                        TextColor="Black" 
-                       ClearButtonVisibility="WhileEditing" />
-                
+                       ClearButtonVisibility="WhileEditing" />                
                 <Button x:Name="logInBtn" 
-                        Text="Войти" 
+                        Text="Войти" FontSize="20" CornerRadius="25" 
+                        Padding="5"
                         Clicked="logInBtn_Clicked" 
                         BackgroundColor="#005a97" 
                         TextColor="GhostWhite" 
                         Margin="0, 20" />
-            </StackLayout>
-           
+            </StackLayout>           
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

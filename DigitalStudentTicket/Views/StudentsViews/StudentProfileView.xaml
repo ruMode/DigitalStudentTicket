@@ -41,7 +41,7 @@
             </StackLayout>
 
             <StackLayout Grid.Row="1" Spacing="20" VerticalOptions="StartAndExpand" Margin="10">
-                <Label Text="Нажмите на QR-код для демонстрации преподавателю" FontSize="Large" HorizontalTextAlignment="Center" TextColor="LightGray"/>
+                <Label Text="Нажмите на QR-код для демонстрации преподавательвателю" FontSize="Large" HorizontalTextAlignment="Center" TextColor="LightGray"/>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

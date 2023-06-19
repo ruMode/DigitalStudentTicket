@@ -115,8 +115,8 @@ namespace DigitalStudentTicket.Views
             //проверяем роль юзера
             if (_user.Role == "Teacher") 
             {
-                MainPage.TeacherCode = _user.Code; //записываем код препода, для вывода расписания
-                Shell.Current.GoToAsync("///shedulePage"); //переходим на страницу с расписанием для препода
+                MainPage.TeacherCode = _user.Code; //записываем код преподаватель, для вывода расписания
+                Shell.Current.GoToAsync("///shedulePage"); //переходим на страницу с расписанием для преподаватель
             }
             else if (_user.Role == "Student")
             {

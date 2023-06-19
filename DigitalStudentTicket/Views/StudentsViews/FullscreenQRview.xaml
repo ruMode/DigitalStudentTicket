@@ -6,7 +6,7 @@
     <ContentPage.Content >
         <StackLayout x:Name="sL">
             <Label Text="Это ваш QR-код" VerticalOptions="StartAndExpand"/>
-            <Label Text="предъявите его преподавателю" VerticalOptions="EndAndExpand"/>
+            <Label Text="предъявите его преподавательвателю" VerticalOptions="EndAndExpand"/>
             
         </StackLayout>
     </ContentPage.Content>

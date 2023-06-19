@@ -37,7 +37,7 @@ namespace DigitalStudentTicket.Data
             else return null;
             
         }
-        public Task<int> AddTeacher (Teachers teacher) //создание препода
+        public Task<int> AddTeacher (Teachers teacher) //создание преподаватель
         {
             if (_database.Table<Teachers>().Where(i => i.Code_teacher==teacher.Code_teacher).FirstOrDefaultAsync().Result == null)
                 return _database.InsertAsync(teacher);
@@ -81,7 +81,7 @@ namespace DigitalStudentTicket.Data
         {
             return _database.Table<Users>().Where(i=> i.Id == user.Id).FirstOrDefaultAsync().Result;
         }
-        public Teachers GetTeacher (string teacherCode) //получение препода
+        public Teachers GetTeacher (string teacherCode) //получение преподаватель
         {
             return _database.Table<Teachers>().Where(i=> i.Code_teacher == teacherCode).FirstOrDefaultAsync().Result;
         }

@@ -7,9 +7,10 @@
        xmlns:views="clr-namespace:DigitalStudentTicket.Views"
        Visual="Material" >
 
+    <ShellContent Title="Основные страницы" Route="StartPage" ContentTemplate="{DataTemplate views:StartPage}"/>
     <ShellContent Title="Вход" Route="loginPage" ContentTemplate="{DataTemplate views:LoginPageView}"/>
     <ShellContent Title="Расписание" Route="shedulePage" ContentTemplate="{DataTemplate local:MainPage}"/>
     <ShellContent Title="База" Route="dbTables" ContentTemplate="{DataTemplate views:DbTablesView}"/>
     <ShellContent Title="Студент" Route="studentsMainPage" ContentTemplate="{DataTemplate  studentViews:StudentMainPage}"/>
-    
+    <ShellContent Title="Сайт" Route="SitePage" ContentTemplate="{DataTemplate  views:WebView}"/>
 </Shell>
