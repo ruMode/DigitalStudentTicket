@@ -56,13 +56,15 @@ namespace DigitalStudentTicket.Views
 
             var rqstContent = Newtonsoft.Json.JsonConvert.SerializeObject(MainPage._lessonData);
 
-            var client = new RestClient("http://localhost/kamtk/hs/SetDataLesson");
+            var client = new RestClient("http://192.168.5.68:80/kamtk/hs/SetDataLesson");
             var request = new RestRequest() { Method = Method.Post };
-            request.AddHeader("Authorization", "Basic 0KHQsNC50YI6");
+            request.AddHeader("Authorization", "Basic 0JDQtNC80LjQvTo=");
             request.AddHeader("Content-Type", "text/plain");
 
             request.AddParameter("application/json", rqstContent, ParameterType.RequestBody);
-
+            //0KHQsNC50YI6MQ ==
+            //0JDQtNC80LjQvTo=
+            
             try
             {
                 RestResponse response = client.Execute(request);
@@ -86,7 +88,7 @@ namespace DigitalStudentTicket.Views
                 await Navigation.PopAsync();
                 throw;
             }
-
+            
 
             Items.Clear();
 

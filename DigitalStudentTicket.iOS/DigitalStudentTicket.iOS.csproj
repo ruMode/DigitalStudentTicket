@@ -133,7 +133,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DigitalStudentTicket\DigitalStudentTicket\DigitalStudentTicket.csproj">
+    <ProjectReference Include="..\DigitalStudentTicket\DigitalStudentTicket.csproj">
       <Project>{ab1a64b5-3da6-46d5-9d57-545bd44a8b7c}</Project>
       <Name>DigitalStudentTicket</Name>
     </ProjectReference>

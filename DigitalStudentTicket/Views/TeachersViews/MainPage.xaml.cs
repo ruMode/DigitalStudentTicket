@@ -60,9 +60,9 @@ namespace DigitalStudentTicket
             {
                 try
                 {
-                    var client = new RestClient("http://localhost/kamtk/hs/SetDataLesson");
+                    var client = new RestClient("http://192.168.5.68:80/kamtk/hs/SetDataLesson");
                     var request = new RestRequest() { Method = Method.Post };
-                    request.AddHeader("Authorization", "Basic 0KHQsNC50YI6");
+                    request.AddHeader("Authorization", "Basic 0JDQtNC80LjQvTo=");
                     request.AddHeader("Content-Type", "text/plain");
                     var rqstContent = App.Database.GetSavedData().JSONData;
                     request.AddParameter("application/json", rqstContent, ParameterType.RequestBody);
@@ -93,7 +93,7 @@ namespace DigitalStudentTicket
             switch ((e.CurrentSelection[0] as SheduleItems).para)
             {
                 case "1":
-                    if (DateTime.Now.Hour >= 10 && DateTime.Now.Minute >= 5)
+                    if (DateTime.Now.Hour >= 15 && DateTime.Now.Minute >= 5)
                         await DisplayAlert("Ошибка!", "Пара уже закончилась!. \n Отметки посещаемости недоступны", "Ок");
                     else await SaveLessonData(0); //записываем данные кликнутой пары
                     break;

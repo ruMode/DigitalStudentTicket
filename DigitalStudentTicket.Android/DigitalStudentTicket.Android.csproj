@@ -53,13 +53,16 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
     <MandroidI18n />
-    <AndroidKeyStore>true</AndroidKeyStore>
+    <AndroidKeyStore>false</AndroidKeyStore>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AndroidLinkTool>r8</AndroidLinkTool>
     <AndroidDexTool>d8</AndroidDexTool>
-    <AndroidSigningKeyStore>C:\Users\Modeus\AppData\Local\Xamarin\Mono for Android\Keystore\Modeus\Modeus.keystore</AndroidSigningKeyStore>
-    <AndroidSigningStorePass>1221QWE</AndroidSigningStorePass>
-    <AndroidSigningKeyAlias>Modeus</AndroidSigningKeyAlias>
+    <AndroidSigningKeyStore>
+    </AndroidSigningKeyStore>
+    <AndroidSigningStorePass>
+    </AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>
+    </AndroidSigningKeyAlias>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
